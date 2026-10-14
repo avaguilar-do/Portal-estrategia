@@ -36,6 +36,9 @@ Edite únicamente este bloque para ajustar colores.
 --texto-suave:#5A6B85;
 --texto-claro:rgba(255,255,255,.78);
 
+--verde:#1E7A52;
+--rojo-dato:#B3261E;
+
 /* Sistema */
 --radio:18px;
 --radio-sm:12px;
@@ -43,12 +46,12 @@ Edite únicamente este bloque para ajustar colores.
 --sombra-hover:0 8px 16px rgba(27,53,93,.08), 0 28px 60px rgba(27,53,93,.16);
 --sombra-nav:0 1px 0 var(--gris-linea), 0 8px 30px rgba(27,53,93,.06);
 --ease:cubic-bezier(.22,.61,.36,1);
---contenedor:1200px;
+--contenedor:1240px;
 }
 
 /* ===================== BASE ===================== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:92px;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
 font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 background:var(--blanco);color:var(--texto);
@@ -57,11 +60,13 @@ line-height:1.65;font-size:16px;font-weight:400;
 }
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
+button{font-family:inherit}
 ::selection{background:var(--azul-horizonte);color:var(--azul-900)}
 
 .contenedor{width:100%;max-width:var(--contenedor);margin:0 auto;padding:0 28px}
-.seccion{padding:112px 0}
+.seccion{padding:96px 0}
 .seccion--alt{background:var(--gris-fondo)}
+.seccion--top{padding-top:136px}
 
 /* Encabezados de sección */
 .eyebrow{
@@ -72,12 +77,27 @@ color:var(--naranja-legado);margin-bottom:18px;
 .eyebrow::before{content:"";width:28px;height:2px;background:var(--naranja-legado);border-radius:2px}
 .titulo-seccion{
 font-size:clamp(1.85rem,3.6vw,2.7rem);font-weight:800;letter-spacing:-.025em;
-color:var(--azul-profundo);line-height:1.18;max-width:18ch;
+color:var(--azul-profundo);line-height:1.18;max-width:20ch;
 }
 .subtitulo-seccion{
-margin-top:16px;font-size:1.02rem;color:var(--texto-suave);max-width:62ch;font-weight:400;
+margin-top:16px;font-size:1.02rem;color:var(--texto-suave);max-width:66ch;font-weight:400;
 }
-.cabecera-seccion{margin-bottom:56px}
+.cabecera-seccion{margin-bottom:52px}
+
+.subtitulo-bloque{
+display:flex;align-items:center;gap:18px;margin:0 0 26px;
+}
+.subtitulo-bloque h3{
+font-size:1.18rem;font-weight:800;letter-spacing:-.015em;color:var(--azul-profundo);white-space:nowrap;
+}
+.subtitulo-bloque span{
+font-size:.78rem;font-weight:600;color:var(--texto-suave);white-space:nowrap;letter-spacing:.02em;
+}
+.subtitulo-bloque::after{content:"";flex:1;height:1px;background:var(--gris-linea)}
+
+.nota-pie{
+margin-top:16px;font-size:.8rem;color:var(--texto-suave);font-style:italic;line-height:1.6;
+}
 
 /* ===================== NAVEGACIÓN ===================== */
 .nav{
@@ -86,7 +106,7 @@ padding:18px 0;transition:all .45s var(--ease);
 background:transparent;
 }
 .nav.compacta{
-background:rgba(255,255,255,.92);
+background:rgba(255,255,255,.93);
 backdrop-filter:saturate(180%) blur(18px);
 -webkit-backdrop-filter:saturate(180%) blur(18px);
 box-shadow:var(--sombra-nav);padding:12px 0;
@@ -99,10 +119,10 @@ box-shadow:var(--sombra-nav);padding:12px 0;
 .nav.compacta .marca__nombre{color:var(--azul-profundo)}
 .nav.compacta .marca__sub{color:var(--naranja-legado)}
 
-.nav__links{display:flex;align-items:center;gap:4px}
+.nav__links{display:flex;align-items:center;gap:2px}
 .nav__link{
-position:relative;padding:9px 16px;border-radius:10px;
-font-size:.885rem;font-weight:600;color:rgba(255,255,255,.82);
+position:relative;padding:9px 14px;border-radius:10px;border:0;background:transparent;cursor:pointer;
+font-size:.86rem;font-weight:600;color:rgba(255,255,255,.82);
 transition:color .3s var(--ease),background .3s var(--ease);white-space:nowrap;
 }
 .nav__link:hover{color:#fff;background:rgba(255,255,255,.1)}
@@ -129,17 +149,23 @@ transition:background .3s var(--ease);
 
 .menu-movil{
 position:fixed;inset:0 0 auto 0;top:0;z-index:999;
-background:var(--azul-900);padding:96px 28px 36px;
+background:var(--azul-900);padding:92px 28px 32px;
 transform:translateY(-100%);transition:transform .5s var(--ease);
 box-shadow:0 30px 60px rgba(0,0,0,.3);
 }
 .menu-movil.abierto{transform:translateY(0)}
-.menu-movil a{
-display:block;padding:16px 4px;color:rgba(255,255,255,.88);font-weight:600;font-size:1.06rem;
+.menu-movil button{
+display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;
+padding:16px 4px;color:rgba(255,255,255,.88);font-weight:600;font-size:1.06rem;
 border-bottom:1px solid rgba(255,255,255,.1);transition:color .25s,padding-left .25s;
 }
-.menu-movil a:last-child{border-bottom:0}
-.menu-movil a:hover{color:var(--azul-horizonte);padding-left:10px}
+.menu-movil button:last-child{border-bottom:0}
+.menu-movil button:hover{color:var(--azul-horizonte);padding-left:10px}
+
+/* ===================== VISTAS ===================== */
+.vista{display:none;animation:aparecer .5s var(--ease)}
+.vista.activa{display:block}
+@keyframes aparecer{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
 /* ===================== HERO ===================== */
 .hero{
@@ -164,7 +190,7 @@ content:"";position:absolute;left:0;right:0;bottom:0;height:150px;pointer-events
 background:linear-gradient(to top,rgba(255,255,255,.07),transparent);
 }
 .hero__orbe{
-position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;opacity:.5;
+position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;
 animation:flotar 14s ease-in-out infinite;
 }
 .hero__orbe--a{width:420px;height:420px;background:var(--azul-horizonte);top:-80px;right:-60px;opacity:.10}
@@ -194,7 +220,7 @@ padding:15px 28px;border-radius:12px;font-family:inherit;
 font-size:.925rem;font-weight:700;letter-spacing:.005em;
 transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);
 }
-.btn svg{width:17px;height:17px;transition:transform .3s var(--ease)}
+.btn svg{width:17px;height:17px;transition:transform .3s var(--ease);flex-shrink:0}
 .btn--primario{background:var(--naranja-legado);color:#fff;box-shadow:0 10px 26px rgba(231,83,1,.34)}
 .btn--primario:hover{background:var(--rojo-cercania);transform:translateY(-2px);box-shadow:0 16px 34px rgba(152,57,32,.4)}
 .btn--primario:hover svg{transform:translateX(4px)}
@@ -234,42 +260,46 @@ color:var(--texto-suave);margin-bottom:16px;
 .tarjeta-mv p{font-size:1.1rem;line-height:1.72;color:var(--texto);font-weight:400;letter-spacing:-.005em}
 
 /* Valores */
-.valores-bloque{margin-top:72px}
-.valores-head{display:flex;align-items:center;gap:18px;margin-bottom:28px}
+.valores-bloque{margin-top:68px}
+.valores-head{display:flex;align-items:baseline;gap:18px;margin-bottom:12px;flex-wrap:wrap}
 .valores-head h3{
 font-size:.78rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--azul-profundo);white-space:nowrap;
 }
-.valores-head::after{content:"";flex:1;height:1px;background:var(--gris-linea)}
-.valores{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.pista{
+font-size:.78rem;color:var(--texto-suave);font-weight:500;display:inline-flex;align-items:center;gap:7px;
+}
+.pista svg{width:14px;height:14px;color:var(--naranja-legado)}
+.valores{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:20px}
 .valor{
 background:var(--blanco);border:1px solid var(--gris-linea);border-radius:var(--radio-sm);
-padding:26px 18px;text-align:center;box-shadow:0 1px 2px rgba(27,53,93,.03);
+padding:26px 18px;text-align:center;box-shadow:0 1px 2px rgba(27,53,93,.03);cursor:pointer;
 transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease);
+font-family:inherit;width:100%;
 }
-.valor:hover{transform:translateY(-5px);box-shadow:var(--sombra-hover);border-color:var(--azul-horizonte)}
+.valor:hover,.valor:focus-visible{transform:translateY(-5px);box-shadow:var(--sombra-hover);border-color:var(--azul-horizonte);outline:none}
 .valor__icono{
 width:44px;height:44px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;
 background:var(--azul-10);color:var(--azul-profundo);transition:all .4s var(--ease);
 }
-.valor:hover .valor__icono{background:var(--naranja-legado);color:#fff}
+.valor:hover .valor__icono,.valor:focus-visible .valor__icono{background:var(--naranja-legado);color:#fff}
 .valor__icono svg{width:19px;height:19px}
-.valor span{font-size:.93rem;font-weight:700;color:var(--azul-profundo);letter-spacing:-.01em}
+.valor span{font-size:.93rem;font-weight:700;color:var(--azul-profundo);letter-spacing:-.01em;display:block}
 
 /* ===================== PRIORIDADES ===================== */
 .prioridades{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .prioridad{
 position:relative;background:var(--blanco);border:1px solid var(--gris-linea);
-border-radius:var(--radio);padding:36px 32px;overflow:hidden;
-box-shadow:var(--sombra-suave);
+border-radius:var(--radio);padding:34px 30px;overflow:hidden;text-align:left;cursor:pointer;
+box-shadow:var(--sombra-suave);font-family:inherit;width:100%;
 transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease);
 }
 .prioridad::after{
 content:"";position:absolute;right:-50px;bottom:-50px;width:150px;height:150px;border-radius:50%;
 background:var(--azul-10);opacity:0;transition:opacity .5s var(--ease),transform .5s var(--ease);transform:scale(.6);
 }
-.prioridad:hover{transform:translateY(-7px);box-shadow:var(--sombra-hover);border-color:transparent}
-.prioridad:hover::after{opacity:1;transform:scale(1)}
-.prioridad__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;position:relative;z-index:1}
+.prioridad:hover,.prioridad:focus-visible{transform:translateY(-7px);box-shadow:var(--sombra-hover);border-color:transparent;outline:none}
+.prioridad:hover::after,.prioridad:focus-visible::after{opacity:1;transform:scale(1)}
+.prioridad__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;position:relative;z-index:1}
 .prioridad__icono{
 width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
 background:linear-gradient(140deg,var(--azul-profundo),var(--azul-600));color:#fff;
@@ -283,14 +313,266 @@ color:var(--azul-20);transition:color .45s var(--ease);
 }
 .prioridad:hover .prioridad__num{color:var(--naranja-legado)}
 .prioridad h3{
-position:relative;z-index:1;font-size:1.13rem;font-weight:700;line-height:1.45;
+position:relative;z-index:1;font-size:1.12rem;font-weight:700;line-height:1.45;
 color:var(--azul-profundo);letter-spacing:-.015em;
 }
-.prioridad__linea{
-position:relative;z-index:1;margin-top:20px;height:3px;width:34px;border-radius:3px;
-background:var(--naranja-legado);transition:width .5s var(--ease);
+.prioridad__pie{
+position:relative;z-index:1;margin-top:18px;display:flex;align-items:center;gap:9px;
+font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-legado);
 }
-.prioridad:hover .prioridad__linea{width:64px}
+.prioridad__pie svg{width:14px;height:14px;transition:transform .4s var(--ease)}
+.prioridad:hover .prioridad__pie svg{transform:translateX(4px)}
+
+/* ===================== MODAL ===================== */
+.modal-fondo{
+position:fixed;inset:0;z-index:2000;display:none;
+background:rgba(14,29,53,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+padding:24px;overflow-y:auto;
+}
+.modal-fondo.abierto{display:flex;align-items:center;justify-content:center;animation:fundir .3s var(--ease)}
+@keyframes fundir{from{opacity:0}to{opacity:1}}
+.modal{
+position:relative;background:var(--blanco);border-radius:var(--radio);
+max-width:620px;width:100%;padding:44px 42px 40px;
+box-shadow:0 40px 90px rgba(14,29,53,.4);animation:subir .4s var(--ease);
+}
+@keyframes subir{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+.modal::before{
+content:"";position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--radio) var(--radio) 0 0;
+background:var(--naranja-legado);
+}
+.modal__cerrar{
+position:absolute;top:18px;right:18px;width:38px;height:38px;border:0;border-radius:10px;cursor:pointer;
+background:var(--azul-10);color:var(--azul-profundo);display:grid;place-items:center;
+transition:background .3s var(--ease),color .3s var(--ease);
+}
+.modal__cerrar:hover{background:var(--azul-profundo);color:#fff}
+.modal__cerrar svg{width:17px;height:17px}
+.modal__icono{
+width:58px;height:58px;border-radius:16px;display:grid;place-items:center;margin-bottom:22px;
+background:linear-gradient(140deg,var(--azul-profundo),var(--azul-600));color:#fff;
+box-shadow:0 10px 24px rgba(27,53,93,.24);
+}
+.modal__icono svg{width:26px;height:26px}
+.modal__etiqueta{
+font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+color:var(--naranja-legado);margin-bottom:10px;display:block;
+}
+.modal__titulo{
+font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--azul-profundo);
+line-height:1.3;margin-bottom:18px;
+}
+.modal__texto{font-size:1.04rem;line-height:1.75;color:var(--texto);font-weight:400}
+
+/* ===================== PERFIL / HISTORIA ===================== */
+.perfil{
+display:grid;grid-template-columns:1.05fr .95fr;gap:0;border-radius:var(--radio);overflow:hidden;
+box-shadow:var(--sombra-suave);border:1px solid var(--gris-linea);
+}
+.perfil__izq{
+position:relative;padding:44px 40px;color:#fff;overflow:hidden;
+background:linear-gradient(150deg,var(--azul-900),var(--azul-profundo) 70%,var(--azul-800));
+}
+.perfil__izq::before{
+content:"";position:absolute;inset:0;opacity:.3;pointer-events:none;
+background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+background-size:46px 46px;
+}
+.perfil__izq>*{position:relative;z-index:1}
+.perfil__rotulo{
+font-size:.74rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;
+color:var(--azul-horizonte);margin-bottom:20px;display:block;text-align:center;
+}
+.perfil__mapa{margin:0 auto;max-width:330px;filter:drop-shadow(0 12px 30px rgba(0,0,0,.35))}
+.perfil__cifras{
+display:grid;grid-template-columns:repeat(2,1fr);gap:22px 16px;margin-top:32px;
+}
+.perfil__cifra{text-align:center}
+.perfil__cifra--ancho{grid-column:1/-1}
+.perfil__cifra b{
+display:block;font-family:'Instrument Serif',Georgia,serif;font-style:normal;
+font-size:clamp(1.8rem,3.4vw,2.35rem);font-weight:400;color:#fff;line-height:1.05;letter-spacing:.01em;
+}
+.perfil__cifra span{
+display:block;margin-top:5px;font-size:.84rem;font-weight:500;color:var(--texto-claro);line-height:1.4;
+}
+.perfil__der{padding:44px 40px;background:var(--blanco);display:flex;flex-direction:column}
+.perfil__intro{
+font-size:1.03rem;line-height:1.72;color:var(--texto);margin-bottom:32px;
+padding-bottom:28px;border-bottom:1px solid var(--gris-linea);
+}
+.perfil__der h3{
+font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:1.65rem;
+color:var(--azul-profundo);line-height:1.2;
+}
+.perfil__der h3 small{
+display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:.76rem;font-weight:600;
+color:var(--texto-suave);letter-spacing:.04em;margin-top:4px;
+}
+.magnitudes{margin-top:22px;border-top:1px solid var(--gris-linea)}
+.magnitud{
+display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+padding:15px 0;border-bottom:1px solid var(--gris-linea);
+}
+.magnitud__nombre{font-size:1rem;font-weight:600;color:var(--texto)}
+.magnitud__valor{text-align:right;line-height:1.2}
+.magnitud__valor b{font-size:1.35rem;font-weight:700;color:var(--azul-profundo);letter-spacing:-.02em}
+.magnitud__valor span{display:block;font-size:.72rem;color:var(--texto-suave);font-weight:500}
+.destacado-naranja{
+margin-top:26px;border-radius:14px;padding:20px 24px;text-align:center;
+background:var(--naranja-legado);color:#fff;box-shadow:0 10px 26px rgba(231,83,1,.26);
+}
+.destacado-naranja span{display:block;font-size:.9rem;font-weight:600;opacity:.95}
+.destacado-naranja b{display:block;font-size:2.2rem;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-top:2px}
+
+/* Línea de tiempo */
+.timeline{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px;margin-top:8px}
+.timeline__col{position:relative;padding-left:26px}
+.timeline__col::before{
+content:"";position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:2px;
+background:linear-gradient(to bottom,var(--azul-20),var(--azul-horizonte),var(--azul-20));
+}
+.hito{position:relative;padding:0 0 30px 30px}
+.hito:last-child{padding-bottom:0}
+.hito::before{
+content:"";position:absolute;left:-7px;top:9px;width:14px;height:14px;border-radius:50%;
+background:var(--blanco);border:3px solid var(--azul-horizonte);
+transition:border-color .35s var(--ease),transform .35s var(--ease),box-shadow .35s var(--ease);
+}
+.hito:hover::before{border-color:var(--naranja-legado);transform:scale(1.25);box-shadow:0 0 0 5px rgba(231,83,1,.14)}
+.hito__anio{
+font-family:'Instrument Serif',Georgia,serif;font-size:1.65rem;font-weight:400;
+color:var(--azul-profundo);line-height:1;letter-spacing:.01em;display:block;margin-bottom:5px;
+transition:color .35s var(--ease);
+}
+.hito:hover .hito__anio{color:var(--naranja-legado)}
+.hito__texto{font-size:.96rem;line-height:1.6;color:var(--texto-suave)}
+
+/* ===================== INDICADORES ===================== */
+.lineas-negocio{
+display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border-radius:var(--radio);overflow:hidden;
+background:rgba(255,255,255,.14);
+box-shadow:0 18px 44px rgba(27,53,93,.18);
+}
+.linea-neg{
+padding:30px 24px;text-align:center;
+background:linear-gradient(150deg,var(--azul-900),var(--azul-profundo) 80%);
+transition:background .4s var(--ease);
+}
+.linea-neg:hover{background:linear-gradient(150deg,var(--azul-800),var(--azul-600) 90%)}
+.linea-neg h4{
+font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:1.18rem;color:#fff;
+line-height:1.3;min-height:2.6em;display:flex;align-items:center;justify-content:center;
+}
+.linea-neg__regla{width:68px;height:2px;background:var(--azul-horizonte);margin:12px auto 18px;border-radius:2px}
+.linea-neg__valor{
+font-size:clamp(1.5rem,2.6vw,2rem);font-weight:700;color:var(--naranja-legado);
+letter-spacing:-.025em;line-height:1.1;
+}
+.linea-neg__nota{margin-top:16px;font-size:.78rem;color:rgba(255,255,255,.62);font-weight:500}
+
+/* Tablas */
+.tabla-caja{
+background:var(--blanco);border:1px solid var(--gris-linea);border-radius:var(--radio);
+box-shadow:var(--sombra-suave);overflow:hidden;
+}
+.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.datos{width:100%;border-collapse:collapse;font-size:.86rem;min-width:620px}
+table.datos caption{
+caption-side:top;text-align:left;padding:20px 24px 14px;
+font-size:1rem;font-weight:700;color:var(--azul-profundo);letter-spacing:-.01em;
+}
+table.datos thead th{
+background:var(--azul-profundo);color:#fff;font-weight:700;font-size:.76rem;
+letter-spacing:.03em;padding:12px 14px;text-align:center;white-space:nowrap;vertical-align:middle;
+}
+table.datos thead th:first-child{text-align:left}
+table.datos thead tr.sub th{background:var(--azul-600);font-size:.72rem}
+table.datos tbody th{
+text-align:left;font-weight:600;color:var(--texto);padding:11px 14px;white-space:nowrap;
+background:var(--blanco);
+}
+table.datos tbody td{padding:11px 14px;text-align:center;color:var(--texto);white-space:nowrap;font-variant-numeric:tabular-nums}
+table.datos tbody tr{border-top:1px solid var(--gris-linea)}
+table.datos tbody tr:nth-child(even) th,
+table.datos tbody tr:nth-child(even) td{background:#FAFCFE}
+table.datos tbody tr:hover th,
+table.datos tbody tr:hover td{background:var(--azul-10)}
+table.datos tbody tr.grupo th{
+background:var(--azul-20);color:var(--azul-profundo);font-weight:800;
+font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;
+}
+table.datos tbody tr.sangria th{padding-left:30px;color:var(--texto-suave);font-weight:500}
+table.datos tbody tr.total th,
+table.datos tbody tr.total td{
+background:var(--azul-profundo);color:#fff;font-weight:800;border-top:2px solid var(--azul-profundo);
+}
+table.datos tbody tr.total:hover th,
+table.datos tbody tr.total:hover td{background:var(--azul-800)}
+table.datos tbody tr.resalte th,
+table.datos tbody tr.resalte td{background:#FCE5D6;color:var(--rojo-cercania);font-weight:800}
+table.datos tbody tr.resalte:hover th,
+table.datos tbody tr.resalte:hover td{background:#F9D7C2}
+table.datos tbody tr.sistema th,
+table.datos tbody tr.sistema td{background:var(--azul-600);color:#fff;font-weight:700}
+table.datos tbody tr.sistema:hover th,
+table.datos tbody tr.sistema:hover td{background:var(--azul-profundo)}
+.pos{color:var(--verde);font-weight:700}
+.neg{color:var(--rojo-dato);font-weight:700}
+.nulo{color:var(--texto-suave)}
+.chip-logro{
+display:inline-block;padding:3px 10px;border-radius:100px;font-weight:800;font-size:.78rem;
+background:var(--naranja-legado);color:#fff;
+}
+.sep-fila td,.sep-fila th{height:10px;padding:0;background:var(--gris-fondo)!important;border:0}
+/* Tabla ancha: compacta para que quepan todas las columnas en escritorio */
+table.compacta{font-size:.79rem}
+table.compacta thead th{padding:10px 8px;font-size:.71rem}
+table.compacta tbody th{padding:9px 10px}
+table.compacta tbody td{padding:9px 8px}
+table.compacta tbody tr.sangria th{padding-left:24px}
+
+/* Gráficas */
+.graficas{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.grafica{
+background:var(--blanco);border:1px solid var(--gris-linea);border-radius:var(--radio);
+padding:26px 24px 20px;box-shadow:var(--sombra-suave);
+}
+.grafica h4{
+font-size:.95rem;font-weight:700;color:var(--azul-profundo);text-align:center;margin-bottom:6px;
+}
+.grafica svg{width:100%;height:auto;display:block}
+.leyenda{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-top:10px}
+.leyenda span{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;color:var(--texto-suave)}
+.leyenda i{width:22px;height:3px;border-radius:3px;display:block}
+
+.conclusion{
+margin-top:24px;border-radius:var(--radio);padding:30px 34px;color:#fff;
+background:linear-gradient(150deg,var(--azul-900),var(--azul-profundo) 80%);
+box-shadow:0 16px 40px rgba(27,53,93,.2);
+display:flex;align-items:flex-start;gap:20px;
+}
+.conclusion svg{width:30px;height:30px;color:var(--azul-horizonte);flex-shrink:0;margin-top:2px}
+.conclusion p{font-size:1.04rem;line-height:1.7;color:#fff}
+
+.rango-destacado{
+display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:100px;
+background:var(--azul-10);border:1px solid var(--gris-linea);
+font-size:.8rem;font-weight:700;color:var(--azul-profundo);
+}
+.rango-destacado i{width:8px;height:8px;border-radius:50%;background:var(--naranja-legado);display:block}
+
+/* Posición #4 */
+.posicion{
+display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;
+background:var(--blanco);border:1px solid var(--gris-linea);border-radius:var(--radio);
+padding:30px 34px;box-shadow:var(--sombra-suave);margin-bottom:24px;
+}
+.posicion__num{
+font-size:clamp(4rem,9vw,6.4rem);font-weight:800;line-height:.84;letter-spacing:-.06em;
+color:var(--naranja-legado);
+}
+.posicion__txt{font-size:1.18rem;line-height:1.55;color:var(--texto);font-weight:500;max-width:46ch}
 
 /* ===================== PROYECTOS ===================== */
 .proyectos{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
@@ -303,13 +585,12 @@ transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .
 .proyecto:hover{transform:translateY(-8px);box-shadow:var(--sombra-hover);border-color:transparent}
 .proyecto--destacado{grid-column:span 2}
 .proyecto__visual{
-position:relative;padding:38px;min-height:188px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;
+position:relative;padding:34px 32px 32px;min-height:188px;
+display:flex;flex-direction:column;align-items:stretch;gap:16px;
 background:linear-gradient(140deg,var(--azul-900),var(--azul-profundo) 62%,var(--azul-600));
 overflow:hidden;
 }
-.proyecto--proximo .proyecto__visual{
-background:linear-gradient(140deg,#EDF1F7,#E1E9F4);
-}
+.proyecto--proximo .proyecto__visual{background:linear-gradient(140deg,#EDF1F7,#E1E9F4)}
 .proyecto__visual::before{
 content:"";position:absolute;inset:0;opacity:.35;
 background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
@@ -327,13 +608,14 @@ transition:opacity .6s var(--ease),transform .6s var(--ease);
 .proyecto:hover .proyecto__brillo{opacity:.34;transform:scale(1.12)}
 .proyecto--proximo .proyecto__brillo{background:var(--azul-horizonte);opacity:.32}
 .proyecto__marca{
-position:relative;z-index:1;font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800;
-letter-spacing:-.035em;color:#fff;line-height:1.1;
+position:relative;z-index:1;order:2;margin-top:auto;min-width:0;
+font-size:clamp(1.7rem,3.1vw,2.5rem);font-weight:800;
+letter-spacing:-.035em;color:#fff;line-height:1.1;overflow-wrap:break-word;
 }
 .proyecto--proximo .proyecto__marca{color:var(--azul-profundo);opacity:.9}
 
 .chip{
-position:relative;z-index:1;flex-shrink:0;
+position:relative;z-index:1;flex-shrink:0;order:1;align-self:flex-end;max-width:100%;
 display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:100px;
 font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;
 }
@@ -354,9 +636,40 @@ justify-content:space-between;align-items:flex-start;
 .proyecto .btn{width:100%;justify-content:center}
 .proyecto--destacado .btn{width:auto}
 
+/* ===================== NOTICIAS ===================== */
+.noticias{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.noticia{
+display:flex;flex-direction:column;background:var(--blanco);border:1px solid var(--gris-linea);
+border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra-suave);
+transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease);
+}
+.noticia:hover{transform:translateY(-6px);box-shadow:var(--sombra-hover);border-color:transparent}
+.noticia__cinta{height:5px;background:var(--azul-profundo)}
+.noticia--destacada .noticia__cinta{background:var(--naranja-legado)}
+.noticia__cuerpo{padding:28px 28px 30px;display:flex;flex-direction:column;gap:12px;flex:1}
+.noticia__meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.noticia__fecha{
+font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-suave);
+}
+.noticia__tag{
+font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+padding:4px 11px;border-radius:100px;background:var(--azul-10);color:var(--azul-profundo);
+}
+.noticia--destacada .noticia__tag{background:rgba(231,83,1,.1);color:var(--naranja-legado)}
+.noticia h3{font-size:1.1rem;font-weight:700;color:var(--azul-profundo);line-height:1.4;letter-spacing:-.015em}
+.noticia p{font-size:.95rem;line-height:1.68;color:var(--texto-suave);flex:1}
+
+.aviso-vacio{
+border:1px dashed var(--gris-linea);border-radius:var(--radio);background:var(--gris-fondo);
+padding:52px 38px;text-align:center;
+}
+.aviso-vacio svg{width:42px;height:42px;color:var(--azul-horizonte);margin:0 auto 18px}
+.aviso-vacio h3{font-size:1.18rem;font-weight:700;color:var(--azul-profundo);margin-bottom:10px}
+.aviso-vacio p{font-size:.97rem;color:var(--texto-suave);max-width:54ch;margin:0 auto;line-height:1.7}
+
 /* ===================== FOOTER ===================== */
 .footer{
-position:relative;overflow:hidden;color:#fff;padding:76px 0 32px;
+position:relative;overflow:hidden;color:#fff;padding:70px 0 30px;
 background:linear-gradient(145deg,var(--azul-900),var(--azul-profundo));
 }
 .footer::before{
@@ -367,7 +680,7 @@ background:linear-gradient(90deg,var(--azul-profundo),var(--naranja-legado),var(
 content:"";position:absolute;width:460px;height:460px;border-radius:50%;filter:blur(110px);
 background:var(--azul-horizonte);opacity:.10;right:-140px;bottom:-240px;
 }
-.footer__inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px}
+.footer__inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
 .footer__nombre{font-size:1.6rem;font-weight:800;letter-spacing:-.025em;line-height:1.25}
 .footer__area{
 font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
@@ -377,14 +690,14 @@ color:var(--azul-horizonte);margin-top:6px;
 font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:1.35rem;
 color:#fff;opacity:.92;max-width:28ch;
 }
-.footer__linea{width:100%;height:1px;background:rgba(255,255,255,.14);margin-top:18px}
+.footer__linea{width:100%;height:1px;background:rgba(255,255,255,.14);margin-top:16px}
 .footer__legal{
 width:100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;
 font-size:.8rem;color:rgba(255,255,255,.55);
 }
 
 /* ===================== ANIMACIONES ===================== */
-.rv{opacity:0;transform:translateY(26px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .rv.visible{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
 *{animation:none!important;transition-duration:.01ms!important}
@@ -393,42 +706,66 @@ html{scroll-behavior:auto}
 }
 
 /* ===================== RESPONSIVE ===================== */
+@media (max-width:1180px){
+.nav__link{padding:9px 11px;font-size:.82rem}
+}
+@media (max-width:1060px){
+.nav__links{display:none}
+.nav__burger{display:flex}
+}
 @media (max-width:1024px){
-.seccion{padding:88px 0}
+.seccion{padding:80px 0}
+.seccion--top{padding-top:124px}
 .prioridades{grid-template-columns:repeat(2,1fr)}
 .proyectos{grid-template-columns:repeat(2,1fr)}
 .proyecto--destacado{grid-column:span 2}
 .valores{grid-template-columns:repeat(3,1fr)}
+.lineas-negocio{grid-template-columns:repeat(2,1fr)}
+.perfil{grid-template-columns:1fr}
+.noticias{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:900px){
-.nav__links{display:none}
-.nav__burger{display:flex}
-html{scroll-padding-top:80px}
+.graficas{grid-template-columns:1fr}
+.timeline{grid-template-columns:1fr;gap:0}
+.timeline__col+.timeline__col{margin-top:30px}
 }
 @media (max-width:760px){
 .contenedor{padding:0 20px}
-.seccion{padding:72px 0}
-.cabecera-seccion{margin-bottom:40px}
-.hero{min-height:auto;padding:128px 0 64px}
+.seccion{padding:64px 0}
+.seccion--top{padding-top:112px}
+.cabecera-seccion{margin-bottom:36px}
+.hero{min-height:auto;padding:124px 0 60px}
 .hero__titulo{max-width:100%}
 .mv{grid-template-columns:1fr;gap:18px}
 .tarjeta-mv{padding:32px 26px}
 .tarjeta-mv p{font-size:1.02rem}
 .prioridades{grid-template-columns:1fr;gap:18px}
-.prioridad{padding:30px 26px}
+.prioridad{padding:28px 24px}
 .proyectos{grid-template-columns:1fr;gap:20px}
 .proyecto--destacado{grid-column:span 1}
 .proyecto__visual{padding:30px;min-height:160px}
 .proyecto__cuerpo{padding:26px}
 .proyecto--destacado .btn{width:100%}
 .valores{grid-template-columns:repeat(2,1fr)}
-.valores-bloque{margin-top:52px}
+.valores-bloque{margin-top:48px}
 .btn{width:100%;justify-content:center}
 .hero__acciones{flex-direction:column;align-items:stretch}
-.footer{padding:60px 0 28px}
+.lineas-negocio{grid-template-columns:1fr}
+.subtitulo-bloque{flex-wrap:wrap;gap:4px 14px}
+.subtitulo-bloque h3{white-space:normal}
+.subtitulo-bloque span{white-space:normal}
+.subtitulo-bloque::after{flex-basis:100%;height:1px;margin-top:6px}
+.perfil__izq,.perfil__der{padding:32px 24px}
+.noticias{grid-template-columns:1fr}
+.posicion{grid-template-columns:1fr;gap:12px;padding:26px 24px;text-align:center}
+.posicion__num{line-height:1}
+.conclusion{flex-direction:column;gap:14px;padding:26px 24px}
+.modal{padding:38px 26px 32px}
+.footer{padding:56px 0 26px}
 }
 @media (max-width:420px){
 .valores{grid-template-columns:1fr}
+.perfil__cifras{grid-template-columns:1fr}
 .marca__sub{display:none}
 }
 </style>
@@ -439,7 +776,7 @@ html{scroll-padding-top:80px}
 <!-- ======================= NAVEGACIÓN ======================= -->
 <header class="nav" id="nav">
 <div class="contenedor nav__inner">
-<a href="#inicio" class="marca" aria-label="Grupo Consupago — Dirección de Estrategia">
+<a href="#inicio" class="marca" data-ir="inicio" aria-label="Grupo Consupago — Dirección de Estrategia">
 <div class="marca__txt">
 <span class="marca__nombre">Grupo Consupago</span>
 <span class="marca__sub">Dirección de Estrategia</span>
@@ -447,10 +784,11 @@ html{scroll-padding-top:80px}
 </a>
 
 <nav class="nav__links" aria-label="Navegación principal">
-<a href="#inicio" class="nav__link">Inicio</a>
-<a href="#proposito" class="nav__link">Propósito</a>
-<a href="#prioridades" class="nav__link">Prioridades</a>
-<a href="#proyectos" class="nav__link">Proyectos</a>
+<button class="nav__link" data-ir="historia">Nuestra historia</button>
+<button class="nav__link" data-ir="inicio">Inicio</button>
+<button class="nav__link" data-ir="indicadores">Indicadores generales</button>
+<button class="nav__link" data-ir="proyectos">Proyectos</button>
+<button class="nav__link" data-ir="noticias">Noticias importantes</button>
 </nav>
 
 <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
@@ -460,20 +798,175 @@ html{scroll-padding-top:80px}
 </header>
 
 <div class="menu-movil" id="menuMovil">
-<a href="#inicio">Inicio</a>
-<a href="#proposito">Propósito</a>
-<a href="#prioridades">Prioridades</a>
-<a href="#proyectos">Proyectos</a>
+<button data-ir="historia">Nuestra historia</button>
+<button data-ir="inicio">Inicio</button>
+<button data-ir="indicadores">Indicadores generales</button>
+<button data-ir="proyectos">Proyectos</button>
+<button data-ir="noticias">Noticias importantes</button>
 </div>
 
-<!-- ======================= 1 · HERO ======================= -->
-<section class="hero" id="inicio">
+<main>
+
+<!-- ============================================================
+VISTA 1 · NUESTRA HISTORIA
+============================================================ -->
+<section class="vista" id="vista-historia" aria-labelledby="t-historia">
+<div class="seccion seccion--top">
+<div class="contenedor">
+
+<div class="cabecera-seccion rv">
+<span class="eyebrow">Quiénes somos</span>
+<h2 class="titulo-seccion" id="t-historia">Nuestra historia</h2>
+<p class="subtitulo-seccion">
+Más de dos décadas construyendo una institución financiera diversificada, con presencia
+nacional y una trayectoria de hitos que han definido su evolución.
+</p>
+</div>
+
+<!-- Perfil institucional -->
+<div class="perfil rv">
+<div class="perfil__izq">
+<span class="perfil__rotulo">Presencia a nivel nacional</span>
+<img class="perfil__mapa" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaAAAAERCAMAAAAKfoO7AAABIFBMVEUxp+ZezOsJIUQfj6YTMFYmW3cHESlYpdsJFyxGeqVblLIKw9uIze4CKF8HXswHESeCuOMXHkgjVJkgNYgABhIAGTcCRHgDSYgEVZEBO3EDWacHZqwKZZQseK4Ndq0xhrQM+P0FVHgviMgKhrFRp8wDJ0Uwls0FKUcmaJUNdZdLmMoS6PpHiLFOl7cLp80IKUgtdpcIOVkKmMdnqMxsttUwlbUU2PELt9YnbKQJKksJlbcwps8ReMUShscBMkwRyOdTtdIENVYDNVIo6P4CDCsCM08KPYMBCycLKk8q2PcMJjsFQ1tFi8VwxekHacQm9/9tuuYAMUcMK1ILY3pOo7wBLWgALGMRueUPJz1UuOcmfMUsyO0ACCQKTKMttdciW5FAkm4XAAAAYHRSTlP//yP/5v9j/yf/////sP+R/1z//8UA/////v//////////////EP8x/////////1D/9v////////9u/////3H//86u/xCP/y6P/w7+//////9Prv//79D/Lf///0////8xloDlAABTbElEQVR42u29CUMbx7I2DMZL7CT3nHvfb3q6NT3dmUWjGaF9AbHvBgzEeI+X2P//X3xV1T2LBHacHCcHMBPMKjlmHlX1U9tTc07DcerOE+eyqw5/9p1n5Tfu3HFur3/2mrvke40uvmtYjBq7d042+86HH24R+q8AdNd87FqbqVuMdjdPgheZ1uN4vD0/fuk4R0e3N+u/ZUErTr34erPB7qW9dhzH29tra+MoyrgMsvmDldtb9V8DCH1Zt7/LeE/HL+fnt+OxziRneLmcu1zybVa/vVP/RQvqt1qjEdiM1lmwMM6CgAecS8lde7G3O7kLLD7eXv8gQPdGPcnAVBggoyMlERtjPIDR45rrNs97fTqZbu/XfwUgNmQIBYf3THFfc8E59zxrQb/DT3hzO043b+/WfwegrjPiBiH4z+fC1y73XK8JKBmM8BOZgQsMmJOThfzjrVH97QDBre7FwAcICtefCNfXkqvorfKAHxQQyUCO47jHnGlk9m9v4d8NENzpg7bPmIHC58AQVlezqDMfRXAYSV5c8Kmej9u9nTyUvaXe/4yLO3Dq7JxbgLSUKss6ywtbe8udVWQMhREJniilspejNnMc55Z4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" alt="Mapa de México con la red de presencia nacional de Grupo Consupago" width="416" height="273" loading="lazy">
+<div class="perfil__cifras">
+<div class="perfil__cifra">
+<b>+ 3,500</b>
+<span>Asesores de Venta</span>
+</div>
+<div class="perfil__cifra">
+<b>+ 900 mil</b>
+<span>Clientes</span>
+</div>
+<div class="perfil__cifra perfil__cifra--ancho">
+<b>+ 300</b>
+<span>Oficinas de Atención al Público</span>
+</div>
+</div>
+</div>
+
+<div class="perfil__der">
+<p class="perfil__intro">
+Somos una Institución de Banca Múltiple con más de 25 años de experiencia en el sector
+financiero, con un modelo de negocio diversificado que integra Crédito de Nómina con
+Cobranza Delegada, Captación, Crédito Comercial y Banca de Gobierno.
+</p>
+
+<h3>
+Magnitudes Financieras
+<small>(1er Semestre 2026)</small>
+</h3>
+
+<div class="magnitudes">
+<div class="magnitud">
+<span class="magnitud__nombre">Utilidad Neta</span>
+<span class="magnitud__valor"><b>785</b><span>Millones de pesos</span></span>
+</div>
+<div class="magnitud">
+<span class="magnitud__nombre">Activos</span>
+<span class="magnitud__valor"><b>34,733</b><span>Millones de pesos</span></span>
+</div>
+<div class="magnitud">
+<span class="magnitud__nombre">ROA</span>
+<span class="magnitud__valor"><b>3.8%</b></span>
+</div>
+<div class="magnitud">
+<span class="magnitud__nombre">ROE</span>
+<span class="magnitud__valor"><b>25.5%</b></span>
+</div>
+</div>
+
+<div class="destacado-naranja">
+<span>Originación digital</span>
+<b>100%</b>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- Línea de tiempo con hitos -->
+<div class="seccion seccion--alt">
+<div class="contenedor">
+<div class="cabecera-seccion rv">
+<span class="eyebrow">Trayectoria</span>
+<h2 class="titulo-seccion">Nuestra historia con hitos</h2>
+<p class="subtitulo-seccion">
+De los primeros créditos a una institución de banca múltiple con líneas de negocio diversificadas.
+</p>
+</div>
+
+<div class="timeline rv">
+<div class="timeline__col">
+<article class="hito">
+<b class="hito__anio">2001</b>
+<p class="hito__texto">Sergio Chedraui inauguró la familia de instituciones financieras de sistema de crédito conocido como "Paguitos"</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2007</b>
+<p class="hito__texto">Obtuvimos la categoría de SOFOL, especializados en un sector específico de la sociedad mexicana</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2009</b>
+<p class="hito__texto">Adquisición de Opcipres y Bancofácil para ampliar el alcance con nuestros clientes</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2012</b>
+<p class="hito__texto">Consubanco opera como Institución de Banca Múltiple</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2015</b>
+<p class="hito__texto">Consubanco ingresa a Ranking de las Empresas más importantes de México</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2019</b>
+<p class="hito__texto">Surge Banca Patrimonial como línea de Captación</p>
+</article>
+</div>
+
+<div class="timeline__col">
+<article class="hito">
+<b class="hito__anio">2020</b>
+<p class="hito__texto">Certificación Great Place to Work</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2021</b>
+<p class="hito__texto">Adquisición de Más Nómina. Se lanza la línea de captación de bajo costo a través de Bankaya</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2022</b>
+<p class="hito__texto">Financiamiento de “segundo piso” a otras entidades de crédito de nómina.</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2023</b>
+<p class="hito__texto">Impulsamos la Agilidad y eficiencia mediante el uso de plataformas digitales</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2024</b>
+<p class="hito__texto">Despliegue del Canal Digital</p>
+</article>
+<article class="hito">
+<b class="hito__anio">2025</b>
+<p class="hito__texto">Surge Banca de Gobierno como línea de negocio</p>
+</article>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ============================================================
+VISTA 2 · INICIO (hero + propósito + prioridades)
+============================================================ -->
+<section class="vista" id="vista-inicio" aria-labelledby="t-inicio">
+
+<!-- Hero -->
+<div class="hero">
 <div class="hero__orbe hero__orbe--a"></div>
 <div class="hero__orbe hero__orbe--b"></div>
 
 <div class="contenedor hero__inner">
-
-<h1 class="hero__titulo rv">
+<h1 class="hero__titulo rv" id="t-inicio">
 Grupo Consupago
 <em>Dirección de Estrategia</em>
 </h1>
@@ -488,18 +981,17 @@ el crecimiento, transformación y evolución del Grupo Consupago.
 </p>
 
 <div class="hero__acciones rv">
-<a href="#proyectos" class="btn btn--primario">
+<button class="btn btn--primario" data-ir="proyectos">
 Ver proyectos estratégicos
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-</a>
-<a href="#prioridades" class="btn btn--fantasma">Prioridades estratégicas</a>
+</button>
+<button class="btn btn--fantasma" data-ir="indicadores">Indicadores generales</button>
+</div>
+</div>
 </div>
 
-</div>
-</section>
-
-<!-- ======================= 2 · MISIÓN, VISIÓN Y VALORES ======================= -->
-<section class="seccion" id="proposito">
+<!-- Misión, visión y valores -->
+<div class="seccion">
 <div class="contenedor">
 
 <div class="cabecera-seccion rv">
@@ -540,58 +1032,64 @@ por generar valor sostenible a clientes, colaboradores, inversionistas y autorid
 </div>
 
 <div class="valores-bloque">
-<div class="valores-head rv"><h3>Valores</h3></div>
+<div class="valores-head rv">
+<h3>Valores</h3>
+<span class="pista">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5 5.5 8 4 9.5l5 5 11-11L18.5 2 9 11.5Z" opacity="0"/><path d="m13 13 5.5 8.5L20 16l5.5-1.5L13 13Z" transform="translate(-6 -3)"/></svg>
+Haga clic en cada valor para ver su descripción
+</span>
+</div>
 
 <div class="valores">
-<article class="valor rv">
-<div class="valor__icono">
+<button class="valor rv" data-valor="agilidad">
+<span class="valor__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg>
-</div>
+</span>
 <span>Agilidad</span>
-</article>
+</button>
 
-<article class="valor rv">
-<div class="valor__icono">
+<button class="valor rv" data-valor="colaboracion">
+<span class="valor__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-1.6a3.4 3.4 0 0 0-3.4-3.4H6.4A3.4 3.4 0 0 0 3 18.4V20"/><circle cx="9.5" cy="8" r="3.4"/><path d="M21 20v-1.6a3.4 3.4 0 0 0-2.6-3.3M15.6 4.7a3.4 3.4 0 0 1 0 6.6"/></svg>
-</div>
+</span>
 <span>Colaboración</span>
-</article>
+</button>
 
-<article class="valor rv">
-<div class="valor__icono">
+<button class="valor rv" data-valor="compromiso">
+<span class="valor__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.2a4.6 4.6 0 0 0-6.5 0L12 7.5 9.7 5.2a4.6 4.6 0 0 0-6.5 6.5l8.8 8.8 8.8-8.8a4.6 4.6 0 0 0 0-6.5Z"/></svg>
-</div>
+</span>
 <span>Compromiso</span>
-</article>
+</button>
 
-<article class="valor rv">
-<div class="valor__icono">
+<button class="valor rv" data-valor="confiabilidad">
+<span class="valor__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.6 8-10V5.3L12 2 4 5.3V12c0 6.4 8 10 8 10Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>
-</div>
+</span>
 <span>Confiabilidad</span>
-</article>
+</button>
 
-<article class="valor rv">
-<div class="valor__icono">
+<button class="valor rv" data-valor="honestidad">
+<span class="valor__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7.5 6.5h9M5 10.5l-2.5 5a3.2 3.2 0 0 0 5 0L5 10.5ZM19 10.5l-2.5 5a3.2 3.2 0 0 0 5 0L19 10.5Z"/></svg>
-</div>
+</span>
 <span>Honestidad</span>
-</article>
+</button>
 
-<article class="valor rv">
-<div class="valor__icono">
+<button class="valor rv" data-valor="respeto">
+<span class="valor__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11V7a4 4 0 0 1 8 0v4"/><rect x="4.5" y="11" width="15" height="10" rx="2.4"/><circle cx="12" cy="16" r="1.3" fill="currentColor" stroke="none"/></svg>
-</div>
+</span>
 <span>Respeto</span>
-</article>
+</button>
 </div>
 </div>
 
 </div>
-</section>
+</div>
 
-<!-- ======================= 3 · PRIORIDADES ESTRATÉGICAS ======================= -->
-<section class="seccion seccion--alt" id="prioridades">
+<!-- Prioridades estratégicas -->
+<div class="seccion seccion--alt">
 <div class="contenedor">
 
 <div class="cabecera-seccion rv">
@@ -599,80 +1097,662 @@ por generar valor sostenible a clientes, colaboradores, inversionistas y autorid
 <h2 class="titulo-seccion">Prioridades Estratégicas</h2>
 <p class="subtitulo-seccion">
 Los cinco ejes que articulan la agenda de crecimiento y transformación del Grupo.
+Haga clic en cada prioridad para ver su descripción.
 </p>
 </div>
 
 <div class="prioridades">
 
-<article class="prioridad rv">
-<div class="prioridad__top">
-<div class="prioridad__icono">
+<button class="prioridad rv" data-prioridad="1">
+<span class="prioridad__top">
+<span class="prioridad__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17.5 9.5 11l4 4L21 7.5"/><path d="M15.5 7.5H21v5.5"/></svg>
-</div>
+</span>
 <span class="prioridad__num">01</span>
-</div>
+</span>
 <h3>Crecimiento rentable y diversificación del negocio</h3>
-<div class="prioridad__linea"></div>
-</article>
+<span class="prioridad__pie">
+Ver descripción
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</span>
+</button>
 
-<article class="prioridad rv">
-<div class="prioridad__top">
-<div class="prioridad__icono">
+<button class="prioridad rv" data-prioridad="2">
+<span class="prioridad__top">
+<span class="prioridad__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/><path d="M19 3.5a4.2 4.2 0 0 1 0 5.8"/></svg>
-</div>
+</span>
 <span class="prioridad__num">02</span>
-</div>
+</span>
 <h3>Vinculación y generación de valor del cliente</h3>
-<div class="prioridad__linea"></div>
-</article>
+<span class="prioridad__pie">
+Ver descripción
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</span>
+</button>
 
-<article class="prioridad rv">
-<div class="prioridad__top">
-<div class="prioridad__icono">
+<button class="prioridad rv" data-prioridad="3">
+<span class="prioridad__top">
+<span class="prioridad__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 14.5a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.84 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.33 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.84l.06-.06a1.7 1.7 0 0 0 .33-1.88 1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.56-1.11 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.84-2.83l.06.06a1.7 1.7 0 0 0 1.88.33H9a1.7 1.7 0 0 0 1-1.56V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.84l-.06.06a1.7 1.7 0 0 0-.33 1.88V9a1.7 1.7 0 0 0 1.56 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1.04Z"/></svg>
-</div>
+</span>
 <span class="prioridad__num">03</span>
-</div>
+</span>
 <h3>Excelencia operativa y escalabilidad</h3>
-<div class="prioridad__linea"></div>
-</article>
+<span class="prioridad__pie">
+Ver descripción
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</span>
+</button>
 
-<article class="prioridad rv">
-<div class="prioridad__top">
-<div class="prioridad__icono">
+<button class="prioridad rv" data-prioridad="4">
+<span class="prioridad__top">
+<span class="prioridad__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="15" height="15" rx="3.5"/><rect x="9" y="9" width="6" height="6" rx="1.6"/><path d="M9 2v2.5M15 2v2.5M9 19.5V22M15 19.5V22M2 9h2.5M2 15h2.5M19.5 9H22M19.5 15H22"/></svg>
-</div>
+</span>
 <span class="prioridad__num">04</span>
-</div>
+</span>
 <h3>Tecnología, datos e IA como aceleradores</h3>
-<div class="prioridad__linea"></div>
-</article>
+<span class="prioridad__pie">
+Ver descripción
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</span>
+</button>
 
-<article class="prioridad rv">
-<div class="prioridad__top">
-<div class="prioridad__icono">
+<button class="prioridad rv" data-prioridad="5">
+<span class="prioridad__top">
+<span class="prioridad__icono">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2.5 2.9 5.9 6.6.96-4.75 4.63 1.12 6.51L12 17.5l-5.87 3-1.12-6.51L.26 9.36l6.6-.96L12 2.5Z"/></svg>
-</div>
+</span>
 <span class="prioridad__num">05</span>
-</div>
+</span>
 <h3>Talento y cultura para la ejecución estratégica</h3>
-<div class="prioridad__linea"></div>
+<span class="prioridad__pie">
+Ver descripción
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</span>
+</button>
+
+</div>
+</div>
+</div>
+</section>
+
+<!-- ============================================================
+VISTA 3 · INDICADORES GENERALES
+============================================================ -->
+<section class="vista" id="vista-indicadores" aria-labelledby="t-indicadores">
+
+<!-- Líneas de negocio -->
+<div class="seccion seccion--top">
+<div class="contenedor">
+
+<div class="cabecera-seccion rv">
+<span class="eyebrow">Desempeño institucional</span>
+<h2 class="titulo-seccion" id="t-indicadores">Indicadores generales</h2>
+<p class="subtitulo-seccion">
+Líneas de negocio, tablero estratégico y posicionamiento en créditos personales del Grupo.
+</p>
+</div>
+
+<div class="subtitulo-bloque rv">
+<h3>Líneas de Negocio</h3>
+<span>(1er semestre 2026)</span>
+</div>
+
+<div class="lineas-negocio rv">
+<article class="linea-neg">
+<h4>Cartera Crédito de Nómina con Cobranza Delegada</h4>
+<div class="linea-neg__regla"></div>
+<div class="linea-neg__valor">25,288 mdp</div>
+<div class="linea-neg__nota">Cartera Vencida 2.1%</div>
 </article>
+<article class="linea-neg">
+<h4>Captación</h4>
+<div class="linea-neg__regla"></div>
+<div class="linea-neg__valor">34,142 mdp</div>
+<div class="linea-neg__nota">Captación Minorista 43%</div>
+</article>
+<article class="linea-neg">
+<h4>Vehículos de Fondeo y Crédito Comercial</h4>
+<div class="linea-neg__regla"></div>
+<div class="linea-neg__valor">9,445 mdp</div>
+<div class="linea-neg__nota">Cartera Vencida 0%</div>
+</article>
+<article class="linea-neg">
+<h4>Banca de Gobierno</h4>
+<div class="linea-neg__regla"></div>
+<div class="linea-neg__valor">1,487 mdp</div>
+<div class="linea-neg__nota">Activos administrados</div>
+</article>
+</div>
+
+<div class="tabla-caja rv" style="margin-top:30px">
+<div class="tabla-scroll">
+<table class="datos">
+<caption>Indicadores de rentabilidad y riesgo</caption>
+<thead>
+<tr>
+<th scope="col"></th>
+<th scope="col">2021</th><th scope="col">2022</th><th scope="col">2023</th>
+<th scope="col">2024</th><th scope="col">2025</th><th scope="col">1S 2026</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row">ROA</th><td>2.0%</td><td>1.8%</td><td>1.7%</td><td>1.9%</td><td>3.3%</td><td>3.8%</td></tr>
+<tr><th scope="row">ROE</th><td>10.0%</td><td>6.9%</td><td>9.2%</td><td>12.1%</td><td>22.7%</td><td>25.5%</td></tr>
+<tr><th scope="row">Margen Neto</th><td>2,222</td><td>2,273</td><td>2,607</td><td>3,372</td><td>4,785</td><td>2,879</td></tr>
+<tr><th scope="row">ICAP</th><td>13.7%</td><td>13.8%</td><td>13.0%</td><td>14.3%</td><td>14.0%</td><td>14.2%</td></tr>
+<tr><th scope="row">IMOR</th><td>3.50%</td><td>2.7%</td><td>1.7%</td><td>1.7%</td><td>1.7%</td><td>1.5%</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- Tablero estratégico -->
+<div class="seccion seccion--alt">
+<div class="contenedor">
+
+<div class="subtitulo-bloque rv">
+<h3>Tablero Estratégico</h3>
+<span>al cierre de julio 2026</span>
+</div>
+
+<div class="tabla-caja rv">
+<div class="tabla-scroll">
+<table class="datos compacta" style="min-width:980px">
+<caption>Indicadores Estratégicos</caption>
+<thead>
+<tr>
+<th scope="col" style="min-width:230px">Variables</th>
+<th scope="col">Pond</th>
+<th scope="col">Alcance</th>
+<th scope="col">Target Anual</th>
+<th scope="col">Target YTD</th>
+<th scope="col">Real YTD</th>
+<th scope="col">Logro YTD<br>(120%)</th>
+<th scope="col">Logro<br>Multiplicador</th>
+<th scope="col">Logro<br>Acumulado</th>
+<th scope="col">Logro<br>Ponderado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Utilidad Neta (mdp)</th>
+<td>N/A</td><td>90% - 120%</td><td>1,531</td><td>866</td><td>871</td>
+<td class="pos">100.7%</td><td></td><td></td><td></td>
+</tr>
+
+<tr class="grupo"><th scope="rowgroup" colspan="10">Indicadores Financieros</th></tr>
+<tr>
+<th scope="row">Ingreso Operativo Total</th>
+<td>10.0%</td><td>90% - 120%</td><td>3,192</td><td>1,759</td><td>1,733</td>
+<td class="pos">98.5%</td><td></td><td></td><td>8.8%</td>
+</tr>
+<tr>
+<th scope="row">Índice de Eficiencia *</th>
+<td>5.0%</td><td>90% - 120%</td><td>76.6%</td><td>78.45%</td><td>73.76%</td>
+<td class="pos">106.4%</td><td></td><td></td><td>5.3%</td>
+</tr>
+
+<tr class="grupo"><th scope="rowgroup" colspan="10">Solvencia</th></tr>
+<tr>
+<th scope="row">ROA</th>
+<td>5.0%</td><td>100% - 120%</td><td>3.41%</td><td>3.48%</td><td>3.68%</td>
+<td class="pos">105.8%</td><td></td><td></td><td>5.3%</td>
+</tr>
+<tr>
+<th scope="row">ROE</th>
+<td>5.0%</td><td>100% - 120%</td><td>23.10%</td><td>23.79%</td><td>24.57%</td>
+<td class="pos">103.3%</td><td></td><td></td><td>5.2%</td>
+</tr>
+<tr>
+<th scope="row">ICAP</th>
+<td>5.0%</td><td>100% - 120%</td><td>13.00%</td><td>13.00%</td><td>13.65%</td>
+<td class="pos">105.0%</td><td></td><td></td><td>5.3%</td>
+</tr>
+
+<tr class="grupo"><th scope="rowgroup" colspan="10">DxN</th></tr>
+<tr>
+<th scope="row">Rentabilidad (Yield)</th>
+<td>10.0%</td><td>90% - 120%</td><td>22.01%</td><td>21.89%</td><td>21.17%</td>
+<td class="pos">96.7%</td><td></td><td></td><td>9.7%</td>
+</tr>
+<tr>
+<th scope="row">Originación</th>
+<td>20.0%</td><td>90% - 120%</td><td>11,063</td><td>5,963.9</td><td>5,297.9</td>
+<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">Canales físicos</th>
+<td>16.5%</td><td>90% - 120%</td><td>9,122</td><td>4,911</td><td>4,376</td>
+<td class="neg">0.0%</td><td>78.5%</td><td>0.0%</td><td>0.0%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">CSB Directo &amp; TMK</th>
+<td>3.2%</td><td>90% - 120%</td><td>1,774</td><td>965</td><td>854</td>
+<td class="neg">0.0%</td><td>24.5%</td><td>0.0%</td><td>0.0%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">Canal Digital</th>
+<td>0.3%</td><td>90% - 120%</td><td>167</td><td>88</td><td>67</td>
+<td class="neg">0.0%</td><td>0.0%</td><td>0.0%</td><td>0.0%</td>
+</tr>
+
+<tr class="grupo"><th scope="rowgroup" colspan="10">Activos</th></tr>
+<tr>
+<th scope="row">Cartera Total</th>
+<td>12.0%</td><td>90% - 120%</td><td>38,691</td><td>36,156</td><td>34,831</td>
+<td class="pos">96.3%</td><td>99.2%</td><td>95.6%</td><td>11.5%</td>
+</tr>
+<tr>
+<th scope="row">Margen VF &amp; CC <em style="font-weight:400;color:var(--texto-suave)">(TBC)</em></th>
+<td>3.0%</td><td>90% - 120%</td><td>663</td><td>356</td><td>379</td>
+<td class="pos">106.4%</td><td></td><td></td><td>3.2%</td>
+</tr>
+
+<tr class="grupo"><th scope="rowgroup" colspan="10">Captación</th></tr>
+<tr>
+<th scope="row">Captación Total</th>
+<td>10.0%</td><td>90% - 120%</td><td>38,750</td><td>35,816</td><td>34,021</td>
+<td class="pos">95.0%</td><td></td><td></td><td>6.9%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">Mayorista</th>
+<td>4.0%</td><td>90% - 120%</td><td>21,462</td><td>19,770</td><td>19,049</td>
+<td class="pos">96.4%</td><td>105.1%</td><td>101.3%</td><td>4.1%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">Minorista</th>
+<td>6.0%</td><td>90% - 120%</td><td>17,288</td><td>16,046</td><td>14,972</td>
+<td class="pos">93.3%</td><td>50.0%</td><td>46.7%</td><td>2.8%</td>
+</tr>
+
+<tr class="grupo"><th scope="rowgroup" colspan="10">Cliente</th></tr>
+<tr>
+<th scope="row">Métricas de Clientes **</th>
+<td>15.0%</td><td>90% - 120%</td><td></td><td></td><td></td>
+<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">Clientes Lazos</th>
+<td>5.0%</td><td>90% - 120%</td><td>12,438</td><td></td><td>421</td>
+<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">Churn Rate Lazos</th>
+<td>5.0%</td><td>90% - 120%</td><td>1.01%</td><td></td><td>0.0%</td>
+<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+</tr>
+<tr class="sangria">
+<th scope="row">NPS</th>
+<td>5.0%</td><td>90% - 120%</td><td>60</td><td></td><td>81</td>
+<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+</tr>
+
+<tr class="total">
+<th scope="row">Total</th>
+<td>100.0%</td><td></td><td></td><td></td><td></td>
+<td>64.80%</td><td></td><td></td><td>61.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<p class="nota-pie rv">
+* Índice de Eficiencia se calcula como la división del Total de Gastos / Total de Ingresos.<br>
+** Las métricas de clientes se habilitarán en el mes de septiembre.<br>
+Cifras en millones de pesos; los totales pueden no coincidir por efectos de redondeo.
+</p>
+
+<!-- Multiplicadores -->
+<div class="subtitulo-bloque rv" style="margin-top:56px">
+<h3>Tablero Estratégico Julio 2026</h3>
+<span>Multiplicadores</span>
+</div>
+
+<div class="tabla-caja rv">
+<div class="tabla-scroll">
+<table class="datos" style="min-width:900px">
+<caption>Multiplicador Originación DxN</caption>
+<thead>
+<tr>
+<th scope="col" style="min-width:250px">Ventas</th>
+<th scope="col">Ponderación</th>
+<th scope="col">Target Anual</th>
+<th scope="col">PPTO YTD</th>
+<th scope="col">Real YTD</th>
+<th scope="col">Logro YTD</th>
+<th scope="col">Alcance multiplicador</th>
+<th scope="col">Logro multiplicador</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row">Costo de Originación canales Físicos</th><td>31.90%</td><td>18.37%</td><td>18.37%</td><td>22.11%</td><td>83.06%</td><td>0.00%</td><td>0.00%</td></tr>
+<tr><th scope="row">Tasa de Colocación Tradicional</th><td>34.04%</td><td>2.82%</td><td>2.82%</td><td>2.78%</td><td>98.56%</td><td>75.00%</td><td>25.53%</td></tr>
+<tr><th scope="row">Productividad Canales Físicos</th><td>34.06%</td><td>0.34</td><td>0.34</td><td>0.52</td><td>155.52%</td><td>155.52%</td><td>52.96%</td></tr>
+<tr><th scope="row" style="text-align:right;font-weight:800">Logro multiplicador Canales s DxN</th><td colspan="6" style="text-align:right"><span class="chip-logro">78.50%</span></td></tr>
+
+<tr class="sep-fila"><td colspan="8"></td></tr>
+
+<tr><th scope="row">Costo de Originación CSB Directo y TMK</th><td>24.59%</td><td>13.38%</td><td>13.38%</td><td>15.16%</td><td>88.24%</td><td>0.00%</td><td>0.00%</td></tr>
+<tr><th scope="row">Tasa de Colocación CSB Directo y TMK</th><td>43.24%</td><td>2.52%</td><td>2.52%</td><td>2.36%</td><td>93.86%</td><td>0.00%</td><td>0.00%</td></tr>
+<tr><th scope="row">Productividad CSB Directo y TMK</th><td>32.17%</td><td>2.06</td><td>2.05</td><td>1.56</td><td>76.20%</td><td>76.20%</td><td>24.52%</td></tr>
+<tr><th scope="row" style="text-align:right;font-weight:800">Logro multiplicador CSB Directo &amp; TMK DxN</th><td colspan="6" style="text-align:right"><span class="chip-logro">24.52%</span></td></tr>
+
+<tr class="sep-fila"><td colspan="8"></td></tr>
+
+<tr><th scope="row">Tasa de Colocación canales digitales</th><td>100.00%</td><td>2.76%</td><td>2.75%</td><td>2.52%</td><td>91.38%</td><td><span class="chip-logro">0.00%</span></td><td></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="tabla-caja rv" style="margin-top:24px">
+<div class="tabla-scroll">
+<table class="datos" style="min-width:900px">
+<caption>Multiplicador Activos (Cartera)</caption>
+<thead>
+<tr>
+<th scope="col" style="min-width:250px">Ventas</th>
+<th scope="col">Ponderación</th>
+<th scope="col">Target Anual</th>
+<th scope="col">PPTO YTD</th>
+<th scope="col">Real YTD</th>
+<th scope="col">Logro YTD</th>
+<th scope="col">Alcance multiplicador</th>
+<th scope="col">Logro multiplicador Ponderado</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row">% Reservas DxN</th><td>12.44%</td><td>4.43%</td><td>4.32%</td><td>4.40%</td><td>98.37%</td><td>75.00%</td><td>9.33%</td></tr>
+<tr><th scope="row">Tasa de rendimiento (Ingresos Totales)</th><td>87.56%</td><td>2.34%</td><td>2.48%</td><td>2.55%</td><td>102.67%</td><td>102.67%</td><td>89.90%</td></tr>
+<tr><th scope="row" style="text-align:right;font-weight:800">Logro multiplicador cartera DxN</th><td colspan="6" style="text-align:right"><span class="chip-logro">99.23%</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="tabla-caja rv" style="margin-top:24px">
+<div class="tabla-scroll">
+<table class="datos" style="min-width:900px">
+<caption>Multiplicador Captación</caption>
+<thead>
+<tr>
+<th scope="col" style="min-width:250px">Ventas</th>
+<th scope="col">Ponderación</th>
+<th scope="col">Target Anual</th>
+<th scope="col">PPTO YTD</th>
+<th scope="col">Real YTD</th>
+<th scope="col">Logro YTD</th>
+<th scope="col">Alcance multiplicador</th>
+<th scope="col">Logro multiplicador</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row">CIF Mayorista</th><td>45.57%</td><td>9.44%</td><td>9.51%</td><td>9.05%</td><td>105.12%</td><td><span class="chip-logro">105.12%</span></td><td>47.90%</td></tr>
+<tr><th scope="row">CIF Minorista</th><td>54.43%</td><td>8.90%</td><td>8.75%</td><td>8.99%</td><td>97.33%</td><td><span class="chip-logro">50.00%</span></td><td>27.22%</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- Créditos personales -->
+<div class="seccion">
+<div class="contenedor">
+
+<div class="subtitulo-bloque rv">
+<h3>Créditos personales</h3>
+<span>Ranking Cartera 1S 2026</span>
+</div>
+
+<div class="posicion rv">
+<div class="posicion__num">4</div>
+<p class="posicion__txt">
+Somos la cuarta institución más relevante en créditos personales del sistema financiero.
+</p>
+</div>
+
+<div class="tabla-caja rv">
+<div class="tabla-scroll">
+<table class="datos compacta" style="min-width:1020px">
+<caption>Ranking Cartera 1S 2026</caption>
+<thead>
+<tr>
+<th scope="col" rowspan="2" style="min-width:180px">Ranking Cartera 1S 2026</th>
+<th scope="col" colspan="2">Personales</th>
+<th scope="col" colspan="2">% Mercado</th>
+<th scope="col" rowspan="2">Δ<br>1S 26 vs 1S 25</th>
+<th scope="col" colspan="2">IMOR</th>
+<th scope="col" colspan="2">ICOR</th>
+<th scope="col" colspan="2">Pérdida Esperada</th>
+</tr>
+<tr class="sub">
+<th scope="col">1S 25</th><th scope="col">1S 26</th>
+<th scope="col">1S 25</th><th scope="col">1S 26</th>
+<th scope="col">1S 25</th><th scope="col">1S 26</th>
+<th scope="col">1S 25</th><th scope="col">1S 26</th>
+<th scope="col">1S 25</th><th scope="col">1S 26</th>
+</tr>
+</thead>
+<tbody>
+<tr class="sistema">
+<th scope="row"># &nbsp; Sistema */</th>
+<td>281,258</td><td><b>311,912</b></td><td>100.0%</td><td>100.0%</td><td>10.9%</td>
+<td>4.5%</td><td>5.2%</td><td>213.7%</td><td>183.7%</td><td>9.60</td><td>0.10</td>
+</tr>
+<tr>
+<th scope="row">1 &nbsp; Banco Azteca</th>
+<td>80,601</td><td><b>89,009</b></td><td>28.7%</td><td>28.5%</td><td class="pos">10.4%</td>
+<td>5.1%</td><td>7.0%</td><td>201.6%</td><td>153.2%</td><td>10.33</td><td>0.11</td>
+</tr>
+<tr>
+<th scope="row">2 &nbsp; BBVA</th>
+<td>75,865</td><td><b>86,435</b></td><td>27.0%</td><td>27.7%</td><td class="pos">13.9%</td>
+<td>4.7%</td><td>5.1%</td><td>218.9%</td><td>195.9%</td><td>10.28</td><td>0.10</td>
+</tr>
+<tr>
+<th scope="row">3 &nbsp; Banamex</th>
+<td>23,864</td><td><b>25,815</b></td><td>8.5%</td><td>8.3%</td><td class="pos">8.2%</td>
+<td>4.0%</td><td>5.2%</td><td>185.3%</td><td>156.9%</td><td>7.33</td><td>0.08</td>
+</tr>
+<tr class="resalte">
+<th scope="row">4 &nbsp; Consubanco</th>
+<td>21,065</td><td><b>25,288</b></td><td>7.5%</td><td>8.1%</td><td>20.0%</td>
+<td>2.4%</td><td>2.0%</td><td>190.6%</td><td>209.1%</td><td>4.61</td><td>0.04</td>
+</tr>
+<tr>
+<th scope="row">5 &nbsp; Santander</th>
+<td>13,809</td><td><b>14,211</b></td><td>4.9%</td><td>4.6%</td><td class="pos">2.9%</td>
+<td>5.3%</td><td>4.5%</td><td>240.4%</td><td>283.5%</td><td>12.76</td><td>0.13</td>
+</tr>
+<tr>
+<th scope="row">6 &nbsp; Scotiabank</th>
+<td>9,179</td><td><b>11,405</b></td><td>3.3%</td><td>3.7%</td><td class="pos">24.3%</td>
+<td>3.5%</td><td>3.5%</td><td>285.0%</td><td>259.8%</td><td>9.92</td><td>0.09</td>
+</tr>
+<tr>
+<th scope="row">7 &nbsp; HSBC</th>
+<td>12,390</td><td><b>10,261</b></td><td>4.4%</td><td>3.3%</td><td class="neg">-17.2%</td>
+<td>3.2%</td><td>3.7%</td><td>323.3%</td><td>287.3%</td><td>10.42</td><td>0.11</td>
+</tr>
+<tr>
+<th scope="row">8 &nbsp; Inbursa</th>
+<td>8,689</td><td><b>9,892</b></td><td>3.1%</td><td>3.2%</td><td class="pos">13.8%</td>
+<td>3.4%</td><td>2.1%</td><td>209.3%</td><td>233.5%</td><td>7.15</td><td>0.05</td>
+</tr>
+<tr>
+<th scope="row">9 &nbsp; Compartamos</th>
+<td>8,960</td><td><b>9,761</b></td><td>3.2%</td><td>3.1%</td><td class="pos">8.9%</td>
+<td>2.9%</td><td>4.9%</td><td>338.6%</td><td>238.7%</td><td>9.72</td><td>0.12</td>
+</tr>
+<tr>
+<th scope="row">10 &nbsp; Multiva</th>
+<td>6,040</td><td><b>7,900</b></td><td>2.1%</td><td>2.5%</td><td class="pos">30.8%</td>
+<td>1.2%</td><td>1.1%</td><td>263.1%</td><td>258.8%</td><td>3.25</td><td>0.03</td>
+</tr>
+<tr>
+<th scope="row">11 &nbsp; BanCoppel</th>
+<td>7,169</td><td><b>7,463</b></td><td>2.5%</td><td>2.4%</td><td class="pos">4.1%</td>
+<td>11.8%</td><td>11.9%</td><td>152.5%</td><td>150.7%</td><td>17.98</td><td>0.18</td>
+</tr>
+<tr>
+<th scope="row">12 &nbsp; Actinver</th>
+<td>3,138</td><td><b>3,078</b></td><td>1.1%</td><td>1.0%</td><td class="neg">-1.9%</td>
+<td>7.3%</td><td>6.0%</td><td>166.6%</td><td>167.1%</td><td>12.08</td><td>0.10</td>
+</tr>
+<tr>
+<th scope="row">13 &nbsp; Bancrea</th>
+<td>2,332</td><td><b>2,886</b></td><td>0.8%</td><td>0.9%</td><td class="pos">23.8%</td>
+<td>1.6%</td><td>1.6%</td><td>148.3%</td><td>226.8%</td><td>2.43</td><td>0.04</td>
+</tr>
+<tr>
+<th scope="row">14 &nbsp; Afirme</th>
+<td>2,433</td><td><b>2,298</b></td><td>0.9%</td><td>0.7%</td><td class="neg">-5.6%</td>
+<td>3.7%</td><td>4.3%</td><td>275.4%</td><td>258.3%</td><td>10.09</td><td>0.11</td>
+</tr>
+<tr>
+<th scope="row">15 &nbsp; Banco del Bajío</th>
+<td>1,390</td><td><b>1,459</b></td><td>0.5%</td><td>0.5%</td><td class="pos">5.0%</td>
+<td>1.9%</td><td>2.6%</td><td>428.5%</td><td>309.5%</td><td>8.05</td><td>0.08</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="graficas rv" style="margin-top:30px">
+
+<div class="grafica">
+<h4>ROE — Consubanco vs Sistema</h4>
+<svg viewBox="0 0 520 290" role="img" aria-label="Evolución del ROE de Consubanco frente al sistema de 2021 a 1S 2026">
+<g stroke="#E3E9F2" stroke-width="1">
+<line x1="54" y1="40" x2="500" y2="40"/>
+<line x1="54" y1="90" x2="500" y2="90"/>
+<line x1="54" y1="140" x2="500" y2="140"/>
+<line x1="54" y1="190" x2="500" y2="190"/>
+<line x1="54" y1="240" x2="500" y2="240"/>
+</g>
+<g font-size="10" fill="#5A6B85" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif">
+<text x="46" y="44">30%</text><text x="46" y="94">22.5%</text>
+<text x="46" y="144">15%</text><text x="46" y="194">7.5%</text><text x="46" y="244">0%</text>
+</g>
+<!-- Sistema -->
+<polyline fill="none" stroke="#7DACE3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+points="88,142.7 170,122.7 252,116.4 334,119.5 416,125.1 488,130.5"/>
+<g fill="#7DACE3">
+<circle cx="88" cy="142.7" r="4.5"/><circle cx="170" cy="122.7" r="4.5"/><circle cx="252" cy="116.4" r="4.5"/>
+<circle cx="334" cy="119.5" r="4.5"/><circle cx="416" cy="125.1" r="4.5"/><circle cx="488" cy="130.5" r="4.5"/>
+</g>
+<g font-size="10.5" font-weight="700" fill="#4B7FB5" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif">
+<text x="88" y="134">14.60%</text><text x="170" y="114">17.59%</text><text x="252" y="108">18.54%</text>
+<text x="334" y="111">18.08%</text><text x="416" y="145">17.23%</text><text x="488" y="150">16.43%</text>
+</g>
+<!-- Consubanco -->
+<polyline fill="none" stroke="#1B355D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+points="88,185.5 170,186.1 252,171.5 334,164.8 416,82.8 488,65.0"/>
+<g fill="#1B355D">
+<circle cx="88" cy="185.5" r="4.5"/><circle cx="170" cy="186.1" r="4.5"/><circle cx="252" cy="171.5" r="4.5"/>
+<circle cx="334" cy="164.8" r="4.5"/><circle cx="416" cy="82.8" r="4.5"/><circle cx="488" cy="65.0" r="4.5"/>
+</g>
+<g font-size="10.5" font-weight="700" fill="#1B355D" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif">
+<text x="88" y="203">8.18%</text><text x="170" y="204">8.08%</text><text x="252" y="189">10.27%</text>
+<text x="334" y="182">11.28%</text><text x="416" y="74">23.58%</text><text x="488" y="57">26.25%</text>
+</g>
+<g font-size="11" fill="#5A6B85" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif">
+<text x="88" y="262">2021</text><text x="170" y="262">2022</text><text x="252" y="262">2023</text>
+<text x="334" y="262">2024</text><text x="416" y="262">2025</text><text x="488" y="262">1S 2026</text>
+</g>
+</svg>
+<div class="leyenda">
+<span><i style="background:#1B355D"></i> ROE Consubanco</span>
+<span><i style="background:#7DACE3"></i> ROE Sistema</span>
+</div>
+</div>
+
+<div class="grafica">
+<h4>ROA — Consubanco vs Sistema</h4>
+<svg viewBox="0 0 520 290" role="img" aria-label="Evolución del ROA de Consubanco frente al sistema de 2021 a 1S 2026">
+<g stroke="#E3E9F2" stroke-width="1">
+<line x1="54" y1="40" x2="500" y2="40"/>
+<line x1="54" y1="90" x2="500" y2="90"/>
+<line x1="54" y1="140" x2="500" y2="140"/>
+<line x1="54" y1="190" x2="500" y2="190"/>
+<line x1="54" y1="240" x2="500" y2="240"/>
+</g>
+<g font-size="10" fill="#5A6B85" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif">
+<text x="46" y="44">4%</text><text x="46" y="94">3%</text>
+<text x="46" y="144">2%</text><text x="46" y="194">1%</text><text x="46" y="244">0%</text>
+</g>
+<!-- Sistema -->
+<polyline fill="none" stroke="#7DACE3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+points="88,158.0 170,143.5 252,155.5 334,141.5 416,141.0 488,144.0"/>
+<g fill="#7DACE3">
+<circle cx="88" cy="158.0" r="4.5"/><circle cx="170" cy="143.5" r="4.5"/><circle cx="252" cy="155.5" r="4.5"/>
+<circle cx="334" cy="141.5" r="4.5"/><circle cx="416" cy="141.0" r="4.5"/><circle cx="488" cy="144.0" r="4.5"/>
+</g>
+<g font-size="10.5" font-weight="700" fill="#4B7FB5" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif">
+<text x="88" y="176">1.64%</text><text x="170" y="135">1.93%</text><text x="252" y="173">1.69%</text>
+<text x="334" y="133">1.97%</text><text x="416" y="161">1.98%</text><text x="488" y="164">1.92%</text>
+</g>
+<!-- Consubanco -->
+<polyline fill="none" stroke="#1B355D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+points="88,131.5 170,143.0 252,136.0 334,139.0 416,79.5 488,62.0"/>
+<g fill="#1B355D">
+<circle cx="88" cy="131.5" r="4.5"/><circle cx="170" cy="143.0" r="4.5"/><circle cx="252" cy="136.0" r="4.5"/>
+<circle cx="334" cy="139.0" r="4.5"/><circle cx="416" cy="79.5" r="4.5"/><circle cx="488" cy="62.0" r="4.5"/>
+</g>
+<g font-size="10.5" font-weight="700" fill="#1B355D" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif">
+<text x="88" y="123">2.17%</text><text x="170" y="161">1.94%</text><text x="252" y="128">2.08%</text>
+<text x="334" y="157">2.02%</text><text x="416" y="71">3.21%</text><text x="488" y="54">3.56%</text>
+</g>
+<g font-size="11" fill="#5A6B85" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif">
+<text x="88" y="262">2021</text><text x="170" y="262">2022</text><text x="252" y="262">2023</text>
+<text x="334" y="262">2024</text><text x="416" y="262">2025</text><text x="488" y="262">1S 2026</text>
+</g>
+</svg>
+<div class="leyenda">
+<span><i style="background:#1B355D"></i> ROA Consubanco</span>
+<span><i style="background:#7DACE3"></i> ROA Sistema</span>
+</div>
+</div>
+
+</div>
+
+<div class="conclusion rv">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17.5 9.5 11l4 4L21 7.5"/><path d="M15.5 7.5H21v5.5"/></svg>
+<p>
+Consubanco muestra una evolución consistente en rentabilidad, fortaleciendo su capacidad
+de generar valor y consolidando un desempeño competitivo frente al sistema.
+</p>
+</div>
+
+<p class="nota-pie rv">
+Cifras en millones de pesos.<br>
+Información al cierre del Primer Semestre 2026. Fuente: CNBV.
+</p>
 
 </div>
 </div>
 </section>
 
-<!-- ======================= 4 · PROYECTOS ESTRATÉGICOS ======================= -->
-<section class="seccion" id="proyectos">
+<!-- ============================================================
+VISTA 4 · PROYECTOS ESTRATÉGICOS
+============================================================ -->
+<section class="vista" id="vista-proyectos" aria-labelledby="t-proyectos">
+<div class="seccion seccion--top">
 <div class="contenedor">
 
 <div class="cabecera-seccion rv">
 <span class="eyebrow">Portafolio</span>
-<h2 class="titulo-seccion">Proyectos Estratégicos</h2>
-<p class="subtitulo-seccion">
-Iniciativas prioritarias bajo seguimiento de la Dirección de Estrategia.
-</p>
+<h2 class="titulo-seccion" id="t-proyectos">Proyectos Estratégicos</h2>
 </div>
 
 <div class="proyectos">
@@ -690,6 +1770,25 @@ Iniciativas prioritarias bajo seguimiento de la Dirección de Estrategia.
 <span class="proyecto__estado">Disponible</span>
 </div>
 <a class="btn btn--primario" href="https://avaguilar-do.github.io/Proyecto-CAN/" target="_blank" rel="noopener noreferrer">
+Ver Proyecto
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4 10.5 13.5"/><path d="M19 14.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 19V6a1.5 1.5 0 0 1 1.5-1.5H9"/></svg>
+</a>
+</div>
+</article>
+
+<!-- Proyecto 5 · Banca Empresarial (disponible) -->
+<article class="proyecto rv">
+<div class="proyecto__visual">
+<div class="proyecto__brillo"></div>
+<h3 class="proyecto__marca">Banca Empresarial</h3>
+<span class="chip chip--disponible"><i></i> Disponible</span>
+</div>
+<div class="proyecto__cuerpo">
+<div class="proyecto__meta">
+<span class="proyecto__label">Estado</span>
+<span class="proyecto__estado">Disponible</span>
+</div>
+<a class="btn btn--primario" href="https://avaguilar-do.github.io/Banca-Empresarial/#tablero" target="_blank" rel="noopener noreferrer">
 Ver Proyecto
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4 10.5 13.5"/><path d="M19 14.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 19V6a1.5 1.5 0 0 1 1.5-1.5H9"/></svg>
 </a>
@@ -753,30 +1852,75 @@ Próximamente
 </div>
 </article>
 
-<!-- Proyecto 5 · Banca Empresarial -->
-<article class="proyecto proyecto--proximo rv">
-<div class="proyecto__visual">
-<div class="proyecto__brillo"></div>
-<h3 class="proyecto__marca">Banca Empresarial</h3>
-<span class="chip chip--proximo">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg>
-Próximamente
-</span>
 </div>
-<div class="proyecto__cuerpo">
-<div class="proyecto__meta">
-<span class="proyecto__label">Estado</span>
-<span class="proyecto__estado proyecto__estado--construccion">En construcción</span>
 </div>
-<span class="btn btn--bloqueado" aria-disabled="true">Próximamente</span>
+</div>
+</section>
+
+<!-- ============================================================
+VISTA 5 · NOTICIAS IMPORTANTES
+============================================================ -->
+<section class="vista" id="vista-noticias" aria-labelledby="t-noticias">
+<div class="seccion seccion--top">
+<div class="contenedor">
+
+<div class="cabecera-seccion rv">
+<span class="eyebrow">Comunicación</span>
+<h2 class="titulo-seccion" id="t-noticias">Noticias importantes</h2>
+<p class="subtitulo-seccion">
+Avisos y comunicados relevantes de la Dirección de Estrategia.
+</p>
+</div>
+
+<!-- ============================================================
+CÓMO AGREGAR UNA NOTICIA
+------------------------------------------------------------
+1. Copie el bloque <article class="noticia"> … </article> de abajo.
+2. Péguelo dentro de <div class="noticias"> … </div>.
+3. Cambie fecha, etiqueta, título y texto.
+4. Para destacar una noticia, agregue la clase "noticia--destacada":
+<article class="noticia noticia--destacada rv">
+5. Al agregar la primera noticia, borre el bloque .aviso-vacio
+que está más abajo y quite el atributo hidden de <div class="noticias">.
+
+PLANTILLA:
+<article class="noticia rv">
+<div class="noticia__cinta"></div>
+<div class="noticia__cuerpo">
+<div class="noticia__meta">
+<span class="noticia__fecha">14 de octubre de 2026</span>
+<span class="noticia__tag">Categoría</span>
+</div>
+<h3>Título de la noticia</h3>
+<p>Texto de la noticia.</p>
 </div>
 </article>
+============================================================ -->
+
+<div class="noticias" hidden>
+<!-- Las noticias se agregan aquí -->
+</div>
+
+<div class="aviso-vacio rv">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h9A1.5 1.5 0 0 1 16 5.5V18a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5.5Z"/>
+<path d="M16 9h2.5A1.5 1.5 0 0 1 20 10.5V18a2 2 0 0 1-2 2"/>
+<path d="M7.5 8h5M7.5 11.5h5M7.5 15h3"/>
+</svg>
+<h3>Sección lista para publicar</h3>
+<p>
+Aún no se ha publicado ninguna noticia. El código incluye una plantilla comentada
+con las instrucciones para agregar comunicados en cuanto estén disponibles.
+</p>
+</div>
 
 </div>
 </div>
 </section>
 
-<!-- ======================= 5 · FOOTER ======================= -->
+</main>
+
+<!-- ======================= FOOTER ======================= -->
 <footer class="footer">
 <div class="contenedor footer__inner">
 <div>
@@ -793,76 +1937,244 @@ Próximamente
 </div>
 </footer>
 
+<!-- ======================= MODAL ======================= -->
+<div class="modal-fondo" id="modalFondo" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+<div class="modal">
+<button class="modal__cerrar" id="modalCerrar" aria-label="Cerrar">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+<div class="modal__icono" id="modalIcono"></div>
+<span class="modal__etiqueta" id="modalEtiqueta"></span>
+<h3 class="modal__titulo" id="modalTitulo"></h3>
+<p class="modal__texto" id="modalTexto"></p>
+</div>
+</div>
+
 <script>
 (function () {
 'use strict';
 
+/* ============================================================
+CONTENIDO DE LOS MODALES
+============================================================ */
+var ICO = {
+agilidad:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg>',
+colaboracion:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-1.6a3.4 3.4 0 0 0-3.4-3.4H6.4A3.4 3.4 0 0 0 3 18.4V20"/><circle cx="9.5" cy="8" r="3.4"/><path d="M21 20v-1.6a3.4 3.4 0 0 0-2.6-3.3M15.6 4.7a3.4 3.4 0 0 1 0 6.6"/></svg>',
+compromiso:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.2a4.6 4.6 0 0 0-6.5 0L12 7.5 9.7 5.2a4.6 4.6 0 0 0-6.5 6.5l8.8 8.8 8.8-8.8a4.6 4.6 0 0 0 0-6.5Z"/></svg>',
+confiabilidad:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.6 8-10V5.3L12 2 4 5.3V12c0 6.4 8 10 8 10Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>',
+honestidad:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7.5 6.5h9M5 10.5l-2.5 5a3.2 3.2 0 0 0 5 0L5 10.5ZM19 10.5l-2.5 5a3.2 3.2 0 0 0 5 0L19 10.5Z"/></svg>',
+respeto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11V7a4 4 0 0 1 8 0v4"/><rect x="4.5" y="11" width="15" height="10" rx="2.4"/><circle cx="12" cy="16" r="1.3" fill="currentColor" stroke="none"/></svg>',
+p1:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17.5 9.5 11l4 4L21 7.5"/><path d="M15.5 7.5H21v5.5"/></svg>',
+p2:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/><path d="M19 3.5a4.2 4.2 0 0 1 0 5.8"/></svg>',
+p3:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 14.5a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.84 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.33 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.84l.06-.06a1.7 1.7 0 0 0 .33-1.88 1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.56-1.11 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.84-2.83l.06.06a1.7 1.7 0 0 0 1.88.33H9a1.7 1.7 0 0 0 1-1.56V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.84l-.06.06a1.7 1.7 0 0 0-.33 1.88V9a1.7 1.7 0 0 0 1.56 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1.04Z"/></svg>',
+p4:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="15" height="15" rx="3.5"/><rect x="9" y="9" width="6" height="6" rx="1.6"/><path d="M9 2v2.5M15 2v2.5M9 19.5V22M15 19.5V22M2 9h2.5M2 15h2.5M19.5 9H22M19.5 15H22"/></svg>',
+p5:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2.5 2.9 5.9 6.6.96-4.75 4.63 1.12 6.51L12 17.5l-5.87 3-1.12-6.51L.26 9.36l6.6-.96L12 2.5Z"/></svg>'
+};
+
+var VALORES = {
+respeto:{
+titulo:'Respeto',
+texto:'Reconocemos, valoramos y aceptamos las cualidades y diferencias entre todos nuestros colaboradores, sabiendo explotar la individualidad para crear equipos altamente efectivos y ofrecer mejores experiencias a nuestros clientes.'
+},
+honestidad:{
+titulo:'Honestidad',
+texto:'Manifestamos nuestra honestidad actuando con rectitud, sinceridad y transparencia en todas nuestras acciones, siempre en estricto apego a las normas éticas, sociales y normativas que nos rigen.'
+},
+agilidad:{
+titulo:'Agilidad',
+texto:'Somos capaces de acompañar el cambio, ajustar la velocidad si es necesario y adaptarnos a las nuevas necesidades, provocando la transformación del negocio y actuando a pesar de la incertidumbre.'
+},
+confiabilidad:{
+titulo:'Confiabilidad',
+texto:'Nos proponemos ser más cercanos a todos nuestros clientes, conociendo sus expectativas y necesidades para satisfacerlas de manera proactiva.'
+},
+colaboracion:{
+titulo:'Colaboración',
+texto:'Fomentamos en nuestros colaboradores el desarrollo de una visión sistémica que genere esfuerzos coordinados para el éxito colectivo y el cumplimiento de los objetivos de la organización.'
+},
+compromiso:{
+titulo:'Compromiso',
+texto:'Fomentamos en nuestros colaboradores la capacidad de autogestionar sus conocimientos y habilidades, para que sean responsables no solo de la acción sino también del resultado, mostrando su competencia y liderazgo.'
+}
+};
+
+var PRIORIDADES = {
+'1':{
+titulo:'Crecimiento rentable y diversificación del negocio',
+texto:'Crecer con rentabilidad ajustada por riesgo y diversificar ingresos y fondeo mediante el modelo de dos bancas, reduciendo la dependencia del descuento por nómina.'
+},
+'2':{
+titulo:'Vinculación y generación de valor del cliente',
+texto:'Profundizar la relación con los clientes a lo largo de su ciclo de vida, ampliando la adopción de soluciones y fortaleciendo retención, experiencia y valor de largo plazo.'
+},
+'3':{
+titulo:'Excelencia operativa y escalabilidad',
+texto:'Simplificar, estandarizar y fortalecer los procesos críticos para una operación ágil, eficiente, segura y escalable, con una gobernanza sólida.'
+},
+'4':{
+titulo:'Tecnología, datos e IA como aceleradores',
+texto:'Fortalecer las capacidades tecnológicas y acelerar la automatización, la analítica avanzada y la IA para transformar la operación, las decisiones y la experiencia del cliente.'
+},
+'5':{
+titulo:'Talento y cultura para la ejecución estratégica',
+texto:'Desarrollar las capacidades, el liderazgo y la cultura para ejecutar con colaboración, productividad, calidad y orientación a resultados.'
+}
+};
+
 /* ---------- Año dinámico ---------- */
 document.getElementById('anio').textContent = new Date().getFullYear();
 
-/* ---------- Navegación compacta al hacer scroll ---------- */
+/* ============================================================
+NAVEGACIÓN ENTRE VISTAS
+============================================================ */
+var VISTAS = ['historia','inicio','indicadores','proyectos','noticias'];
 var nav = document.getElementById('nav');
-function alScroll() {
-if (window.scrollY > 40) { nav.classList.add('compacta'); }
-else { nav.classList.remove('compacta'); }
-}
-alScroll();
-window.addEventListener('scroll', alScroll, { passive: true });
-
-/* ---------- Menú móvil ---------- */
 var burger = document.getElementById('burger');
 var menu = document.getElementById('menuMovil');
+var vistaActual = 'inicio';
 
-function alternarMenu(forzarCerrar) {
-var abierto = forzarCerrar ? false : !menu.classList.contains('abierto');
-menu.classList.toggle('abierto', abierto);
-burger.classList.toggle('abierto', abierto);
-burger.setAttribute('aria-expanded', String(abierto));
-document.body.style.overflow = abierto ? 'hidden' : '';
+function ajustarNav() {
+if (vistaActual === 'inicio' && window.scrollY <= 40) {
+nav.classList.remove('compacta');
+} else {
+nav.classList.add('compacta');
+}
 }
 
-burger.addEventListener('click', function () { alternarMenu(); });
-menu.querySelectorAll('a').forEach(function (a) {
-a.addEventListener('click', function () { alternarMenu(true); });
+function revelar(cont) {
+var els = cont.querySelectorAll('.rv');
+if (!('IntersectionObserver' in window)) {
+Array.prototype.forEach.call(els, function (el) { el.classList.add('visible'); });
+return;
+}
+var obs = new IntersectionObserver(function (entradas) {
+entradas.forEach(function (e) {
+if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+});
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+Array.prototype.forEach.call(els, function (el, i) {
+el.style.transitionDelay = ((i % 6) * 65) + 'ms';
+obs.observe(el);
+});
+}
+
+function mostrarVista(id, saltar) {
+if (VISTAS.indexOf(id) === -1) { id = 'inicio'; }
+vistaActual = id;
+
+VISTAS.forEach(function (v) {
+var sec = document.getElementById('vista-' + v);
+if (sec) { sec.classList.toggle('activa', v === id); }
+});
+
+Array.prototype.forEach.call(document.querySelectorAll('[data-ir]'), function (b) {
+if (b.classList.contains('nav__link')) {
+b.classList.toggle('activo', b.getAttribute('data-ir') === id);
+}
+});
+
+if (!saltar) { window.scrollTo({ top: 0, behavior: 'auto' }); }
+
+var sec = document.getElementById('vista-' + id);
+if (sec) { revelar(sec); }
+
+ajustarNav();
+
+if (history.replaceState) { history.replaceState(null, '', '#' + id); }
+else { location.hash = id; }
+}
+
+Array.prototype.forEach.call(document.querySelectorAll('[data-ir]'), function (b) {
+b.addEventListener('click', function (ev) {
+ev.preventDefault();
+cerrarMenu();
+mostrarVista(b.getAttribute('data-ir'));
+});
+});
+
+window.addEventListener('hashchange', function () {
+var h = (location.hash || '').replace('#', '');
+if (h && h !== vistaActual) { mostrarVista(h); }
+});
+
+/* ---------- Menú móvil ---------- */
+function cerrarMenu() {
+menu.classList.remove('abierto');
+burger.classList.remove('abierto');
+burger.setAttribute('aria-expanded', 'false');
+document.body.style.overflow = '';
+}
+burger.addEventListener('click', function () {
+var abrir = !menu.classList.contains('abierto');
+menu.classList.toggle('abierto', abrir);
+burger.classList.toggle('abierto', abrir);
+burger.setAttribute('aria-expanded', String(abrir));
+document.body.style.overflow = abrir ? 'hidden' : '';
 });
 window.addEventListener('resize', function () {
-if (window.innerWidth > 900) { alternarMenu(true); }
+if (window.innerWidth > 1060) { cerrarMenu(); }
 });
 
-/* ---------- Revelado progresivo al hacer scroll ---------- */
-var elementos = document.querySelectorAll('.rv');
+window.addEventListener('scroll', ajustarNav, { passive: true });
 
-if ('IntersectionObserver' in window) {
-var observador = new IntersectionObserver(function (entradas) {
-entradas.forEach(function (entrada) {
-if (entrada.isIntersecting) {
-entrada.target.classList.add('visible');
-observador.unobserve(entrada.target);
+/* ============================================================
+MODAL
+============================================================ */
+var mFondo = document.getElementById('modalFondo');
+var mCerrar = document.getElementById('modalCerrar');
+var mIcono = document.getElementById('modalIcono');
+var mEtiqueta = document.getElementById('modalEtiqueta');
+var mTitulo = document.getElementById('modalTitulo');
+var mTexto = document.getElementById('modalTexto');
+var ultimoFoco = null;
+
+function abrirModal(etiqueta, titulo, texto, icono) {
+ultimoFoco = document.activeElement;
+mEtiqueta.textContent = etiqueta;
+mTitulo.textContent = titulo;
+mTexto.textContent = texto;
+mIcono.innerHTML = icono || '';
+mFondo.classList.add('abierto');
+document.body.style.overflow = 'hidden';
+mCerrar.focus();
+}
+
+function cerrarModal() {
+mFondo.classList.remove('abierto');
+document.body.style.overflow = '';
+if (ultimoFoco && ultimoFoco.focus) { ultimoFoco.focus(); }
+}
+
+mCerrar.addEventListener('click', cerrarModal);
+mFondo.addEventListener('click', function (e) { if (e.target === mFondo) { cerrarModal(); } });
+document.addEventListener('keydown', function (e) {
+if (e.key === 'Escape') {
+if (mFondo.classList.contains('abierto')) { cerrarModal(); }
+else if (menu.classList.contains('abierto')) { cerrarMenu(); }
 }
 });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-elementos.forEach(function (el, i) {
-el.style.transitionDelay = ((i % 6) * 70) + 'ms';
-observador.observe(el);
+Array.prototype.forEach.call(document.querySelectorAll('[data-valor]'), function (b) {
+b.addEventListener('click', function () {
+var k = b.getAttribute('data-valor');
+var d = VALORES[k];
+if (d) { abrirModal('Valor institucional', d.titulo, d.texto, ICO[k]); }
 });
-} else {
-elementos.forEach(function (el) { el.classList.add('visible'); });
-}
-
-/* ---------- Resaltado del enlace activo ---------- */
-var secciones = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
-var enlaces = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
-
-function marcarActivo() {
-var y = window.scrollY + 140, actual = secciones[0] ? secciones[0].id : '';
-secciones.forEach(function (s) { if (s.offsetTop <= y) { actual = s.id; } });
-enlaces.forEach(function (a) {
-a.classList.toggle('activo', a.getAttribute('href') === '#' + actual);
 });
-}
-marcarActivo();
-window.addEventListener('scroll', marcarActivo, { passive: true });
+
+Array.prototype.forEach.call(document.querySelectorAll('[data-prioridad]'), function (b) {
+b.addEventListener('click', function () {
+var k = b.getAttribute('data-prioridad');
+var d = PRIORIDADES[k];
+if (d) { abrirModal('Prioridad estratégica ' + k, d.titulo, d.texto, ICO['p' + k]); }
+});
+});
+
+/* ============================================================
+ARRANQUE
+============================================================ */
+var inicial = (location.hash || '').replace('#', '');
+mostrarVista(VISTAS.indexOf(inicial) !== -1 ? inicial : 'inicio', true);
 })();
 </script>
 
