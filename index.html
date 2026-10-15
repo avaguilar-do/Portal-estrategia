@@ -39,6 +39,11 @@ Edite únicamente este bloque para ajustar colores.
 --verde:#1E7A52;
 --rojo-dato:#B3261E;
 
+/* Semáforo del tablero estratégico (tomado del archivo original) */
+--logro-verde:#1E8E3E;
+--logro-ambar:#B37E00;
+--logro-rojo:#D32F2F;
+
 /* Sistema */
 --radio:18px;
 --radio-sm:12px;
@@ -517,14 +522,28 @@ table.datos tbody tr.sistema th,
 table.datos tbody tr.sistema td{background:var(--azul-600);color:#fff;font-weight:700}
 table.datos tbody tr.sistema:hover th,
 table.datos tbody tr.sistema:hover td{background:var(--azul-profundo)}
-.pos{color:var(--verde);font-weight:700}
-.neg{color:var(--rojo-dato);font-weight:700}
+/* Semáforo del tablero: igual que el archivo original
+verde = logro >= 100% | ámbar = entre 90% y 100% | rojo = sin logro */
+table.datos tbody td.logro-verde{color:var(--logro-verde);font-weight:700}
+table.datos tbody td.logro-ambar{color:var(--logro-ambar);font-weight:700}
+table.datos tbody td.logro-rojo{color:var(--logro-rojo);font-weight:700}
+table.datos tbody td.pos{color:var(--verde);font-weight:700}
+table.datos tbody td.neg{color:var(--rojo-dato);font-weight:700}
+.nulo{color:var(--texto-suave)}
 .nulo{color:var(--texto-suave)}
 .chip-logro{
 display:inline-block;padding:3px 10px;border-radius:100px;font-weight:800;font-size:.78rem;
 background:var(--naranja-legado);color:#fff;
 }
 .sep-fila td,.sep-fila th{height:10px;padding:0;background:var(--gris-fondo)!important;border:0}
+/* Fila de total del multiplicador: etiqueta a la derecha, valor bajo su propia columna */
+table.datos tbody tr.fila-total-mult th{
+text-align:right;font-weight:800;color:var(--azul-profundo);white-space:normal;
+background:var(--azul-10);
+}
+table.datos tbody tr.fila-total-mult td{background:var(--azul-10);padding:9px 8px}
+table.datos tbody tr.fila-total-mult:hover th,
+table.datos tbody tr.fila-total-mult:hover td{background:var(--azul-20)}
 /* Tabla ancha: compacta para que quepan todas las columnas en escritorio */
 table.compacta{font-size:.79rem}
 table.compacta thead th{padding:10px 8px;font-size:.71rem}
@@ -645,6 +664,15 @@ transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .
 }
 .noticia:hover{transform:translateY(-6px);box-shadow:var(--sombra-hover);border-color:transparent}
 .noticia__cinta{height:5px;background:var(--azul-profundo)}
+.noticia__fuente{
+display:inline-flex;align-items:center;gap:8px;margin-top:4px;
+font-size:.84rem;font-weight:700;color:var(--naranja-legado);
+transition:gap .3s var(--ease);
+}
+.noticia__fuente svg{width:14px;height:14px;flex-shrink:0}
+.noticia:hover .noticia__fuente{gap:12px}
+a.noticia{color:inherit}
+a.noticia:focus-visible{outline:3px solid var(--azul-horizonte);outline-offset:3px}
 .noticia--destacada .noticia__cinta{background:var(--naranja-legado)}
 .noticia__cuerpo{padding:28px 28px 30px;display:flex;flex-direction:column;gap:12px;flex:1}
 .noticia__meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -659,13 +687,6 @@ padding:4px 11px;border-radius:100px;background:var(--azul-10);color:var(--azul-
 .noticia h3{font-size:1.1rem;font-weight:700;color:var(--azul-profundo);line-height:1.4;letter-spacing:-.015em}
 .noticia p{font-size:.95rem;line-height:1.68;color:var(--texto-suave);flex:1}
 
-.aviso-vacio{
-border:1px dashed var(--gris-linea);border-radius:var(--radio);background:var(--gris-fondo);
-padding:52px 38px;text-align:center;
-}
-.aviso-vacio svg{width:42px;height:42px;color:var(--azul-horizonte);margin:0 auto 18px}
-.aviso-vacio h3{font-size:1.18rem;font-weight:700;color:var(--azul-profundo);margin-bottom:10px}
-.aviso-vacio p{font-size:.97rem;color:var(--texto-suave);max-width:54ch;margin:0 auto;line-height:1.7}
 
 /* ===================== FOOTER ===================== */
 .footer{
@@ -729,6 +750,20 @@ html{scroll-behavior:auto}
 .timeline{grid-template-columns:1fr;gap:0}
 .timeline__col+.timeline__col{margin-top:30px}
 }
+@media (max-width:900px){
+/* En pantallas pequeñas la primera columna queda fija al desplazar la tabla,
+para no perder de vista el concepto de cada fila. */
+table.datos thead th:first-child,
+table.datos tbody tr:not(.grupo):not(.fila-total-mult) th{
+position:sticky;left:0;z-index:2;
+white-space:normal;min-width:132px;max-width:160px;
+box-shadow:6px 0 10px -6px rgba(27,53,93,.26);
+}
+table.datos thead th:first-child{z-index:4}
+table.datos tbody tr.sangria th{padding-left:20px}
+table.datos tbody tr.grupo th .et-grupo{position:sticky;left:14px;display:inline-block}
+table.datos tbody tr.fila-total-mult th{text-align:left;padding-left:14px}
+}
 @media (max-width:760px){
 .contenedor{padding:0 20px}
 .seccion{padding:64px 0}
@@ -784,11 +819,11 @@ html{scroll-behavior:auto}
 </a>
 
 <nav class="nav__links" aria-label="Navegación principal">
-<button class="nav__link" data-ir="historia">Nuestra historia</button>
 <button class="nav__link" data-ir="inicio">Inicio</button>
-<button class="nav__link" data-ir="indicadores">Indicadores generales</button>
+<button class="nav__link" data-ir="historia">Quiénes somos</button>
+<button class="nav__link" data-ir="indicadores">Indicadores</button>
 <button class="nav__link" data-ir="proyectos">Proyectos</button>
-<button class="nav__link" data-ir="noticias">Noticias importantes</button>
+<button class="nav__link" data-ir="noticias">Noticias</button>
 </nav>
 
 <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
@@ -798,11 +833,11 @@ html{scroll-behavior:auto}
 </header>
 
 <div class="menu-movil" id="menuMovil">
-<button data-ir="historia">Nuestra historia</button>
 <button data-ir="inicio">Inicio</button>
-<button data-ir="indicadores">Indicadores generales</button>
+<button data-ir="historia">Quiénes somos</button>
+<button data-ir="indicadores">Indicadores</button>
 <button data-ir="proyectos">Proyectos</button>
-<button data-ir="noticias">Noticias importantes</button>
+<button data-ir="noticias">Noticias</button>
 </div>
 
 <main>
@@ -815,7 +850,6 @@ VISTA 1 · NUESTRA HISTORIA
 <div class="contenedor">
 
 <div class="cabecera-seccion rv">
-<span class="eyebrow">Quiénes somos</span>
 <h2 class="titulo-seccion" id="t-historia">Nuestra historia</h2>
 <p class="subtitulo-seccion">
 Más de dos décadas construyendo una institución financiera diversificada, con presencia
@@ -889,8 +923,7 @@ Magnitudes Financieras
 <div class="seccion seccion--alt">
 <div class="contenedor">
 <div class="cabecera-seccion rv">
-<span class="eyebrow">Trayectoria</span>
-<h2 class="titulo-seccion">Nuestra historia con hitos</h2>
+<h2 class="titulo-seccion">Trayectoria</h2>
 <p class="subtitulo-seccion">
 De los primeros créditos a una institución de banca múltiple con líneas de negocio diversificadas.
 </p>
@@ -1097,7 +1130,6 @@ Haga clic en cada valor para ver su descripción
 <h2 class="titulo-seccion">Prioridades Estratégicas</h2>
 <p class="subtitulo-seccion">
 Los cinco ejes que articulan la agenda de crecimiento y transformación del Grupo.
-Haga clic en cada prioridad para ver su descripción.
 </p>
 </div>
 
@@ -1188,11 +1220,7 @@ VISTA 3 · INDICADORES GENERALES
 <div class="contenedor">
 
 <div class="cabecera-seccion rv">
-<span class="eyebrow">Desempeño institucional</span>
-<h2 class="titulo-seccion" id="t-indicadores">Indicadores generales</h2>
-<p class="subtitulo-seccion">
-Líneas de negocio, tablero estratégico y posicionamiento en créditos personales del Grupo.
-</p>
+<h2 class="titulo-seccion" id="t-indicadores">Indicadores</h2>
 </div>
 
 <div class="subtitulo-bloque rv">
@@ -1283,114 +1311,114 @@ Líneas de negocio, tablero estratégico y posicionamiento en créditos personal
 <tr>
 <th scope="row">Utilidad Neta (mdp)</th>
 <td>N/A</td><td>90% - 120%</td><td>1,531</td><td>866</td><td>871</td>
-<td class="pos">100.7%</td><td></td><td></td><td></td>
+<td class="logro-verde">100.7%</td><td></td><td></td><td></td>
 </tr>
 
-<tr class="grupo"><th scope="rowgroup" colspan="10">Indicadores Financieros</th></tr>
+<tr class="grupo"><th scope="rowgroup" colspan="10"><span class="et-grupo">Indicadores Financieros</span></th></tr>
 <tr>
 <th scope="row">Ingreso Operativo Total</th>
 <td>10.0%</td><td>90% - 120%</td><td>3,192</td><td>1,759</td><td>1,733</td>
-<td class="pos">98.5%</td><td></td><td></td><td>8.8%</td>
+<td class="logro-ambar">98.5%</td><td></td><td></td><td>8.8%</td>
 </tr>
 <tr>
 <th scope="row">Índice de Eficiencia *</th>
 <td>5.0%</td><td>90% - 120%</td><td>76.6%</td><td>78.45%</td><td>73.76%</td>
-<td class="pos">106.4%</td><td></td><td></td><td>5.3%</td>
+<td class="logro-verde">106.4%</td><td></td><td></td><td>5.3%</td>
 </tr>
 
-<tr class="grupo"><th scope="rowgroup" colspan="10">Solvencia</th></tr>
+<tr class="grupo"><th scope="rowgroup" colspan="10"><span class="et-grupo">Solvencia</span></th></tr>
 <tr>
 <th scope="row">ROA</th>
 <td>5.0%</td><td>100% - 120%</td><td>3.41%</td><td>3.48%</td><td>3.68%</td>
-<td class="pos">105.8%</td><td></td><td></td><td>5.3%</td>
+<td class="logro-verde">105.8%</td><td></td><td></td><td>5.3%</td>
 </tr>
 <tr>
 <th scope="row">ROE</th>
 <td>5.0%</td><td>100% - 120%</td><td>23.10%</td><td>23.79%</td><td>24.57%</td>
-<td class="pos">103.3%</td><td></td><td></td><td>5.2%</td>
+<td class="logro-verde">103.3%</td><td></td><td></td><td>5.2%</td>
 </tr>
 <tr>
 <th scope="row">ICAP</th>
 <td>5.0%</td><td>100% - 120%</td><td>13.00%</td><td>13.00%</td><td>13.65%</td>
-<td class="pos">105.0%</td><td></td><td></td><td>5.3%</td>
+<td class="logro-verde">105.0%</td><td></td><td></td><td>5.3%</td>
 </tr>
 
-<tr class="grupo"><th scope="rowgroup" colspan="10">DxN</th></tr>
+<tr class="grupo"><th scope="rowgroup" colspan="10"><span class="et-grupo">DxN</span></th></tr>
 <tr>
 <th scope="row">Rentabilidad (Yield)</th>
 <td>10.0%</td><td>90% - 120%</td><td>22.01%</td><td>21.89%</td><td>21.17%</td>
-<td class="pos">96.7%</td><td></td><td></td><td>9.7%</td>
+<td class="logro-ambar">96.7%</td><td></td><td></td><td>9.7%</td>
 </tr>
 <tr>
 <th scope="row">Originación</th>
 <td>20.0%</td><td>90% - 120%</td><td>11,063</td><td>5,963.9</td><td>5,297.9</td>
-<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td></td><td></td><td>0.0%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">Canales físicos</th>
 <td>16.5%</td><td>90% - 120%</td><td>9,122</td><td>4,911</td><td>4,376</td>
-<td class="neg">0.0%</td><td>78.5%</td><td>0.0%</td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td>78.5%</td><td>0.0%</td><td>0.0%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">CSB Directo &amp; TMK</th>
 <td>3.2%</td><td>90% - 120%</td><td>1,774</td><td>965</td><td>854</td>
-<td class="neg">0.0%</td><td>24.5%</td><td>0.0%</td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td>24.5%</td><td>0.0%</td><td>0.0%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">Canal Digital</th>
 <td>0.3%</td><td>90% - 120%</td><td>167</td><td>88</td><td>67</td>
-<td class="neg">0.0%</td><td>0.0%</td><td>0.0%</td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td>0.0%</td><td>0.0%</td><td>0.0%</td>
 </tr>
 
-<tr class="grupo"><th scope="rowgroup" colspan="10">Activos</th></tr>
+<tr class="grupo"><th scope="rowgroup" colspan="10"><span class="et-grupo">Activos</span></th></tr>
 <tr>
 <th scope="row">Cartera Total</th>
 <td>12.0%</td><td>90% - 120%</td><td>38,691</td><td>36,156</td><td>34,831</td>
-<td class="pos">96.3%</td><td>99.2%</td><td>95.6%</td><td>11.5%</td>
+<td class="logro-ambar">96.3%</td><td>99.2%</td><td>95.6%</td><td>11.5%</td>
 </tr>
 <tr>
 <th scope="row">Margen VF &amp; CC <em style="font-weight:400;color:var(--texto-suave)">(TBC)</em></th>
 <td>3.0%</td><td>90% - 120%</td><td>663</td><td>356</td><td>379</td>
-<td class="pos">106.4%</td><td></td><td></td><td>3.2%</td>
+<td class="logro-verde">106.4%</td><td></td><td></td><td>3.2%</td>
 </tr>
 
-<tr class="grupo"><th scope="rowgroup" colspan="10">Captación</th></tr>
+<tr class="grupo"><th scope="rowgroup" colspan="10"><span class="et-grupo">Captación</span></th></tr>
 <tr>
 <th scope="row">Captación Total</th>
 <td>10.0%</td><td>90% - 120%</td><td>38,750</td><td>35,816</td><td>34,021</td>
-<td class="pos">95.0%</td><td></td><td></td><td>6.9%</td>
+<td class="logro-ambar">95.0%</td><td></td><td></td><td>6.9%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">Mayorista</th>
 <td>4.0%</td><td>90% - 120%</td><td>21,462</td><td>19,770</td><td>19,049</td>
-<td class="pos">96.4%</td><td>105.1%</td><td>101.3%</td><td>4.1%</td>
+<td class="logro-ambar">96.4%</td><td>105.1%</td><td>101.3%</td><td>4.1%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">Minorista</th>
 <td>6.0%</td><td>90% - 120%</td><td>17,288</td><td>16,046</td><td>14,972</td>
-<td class="pos">93.3%</td><td>50.0%</td><td>46.7%</td><td>2.8%</td>
+<td class="logro-ambar">93.3%</td><td>50.0%</td><td>46.7%</td><td>2.8%</td>
 </tr>
 
-<tr class="grupo"><th scope="rowgroup" colspan="10">Cliente</th></tr>
+<tr class="grupo"><th scope="rowgroup" colspan="10"><span class="et-grupo">Cliente</span></th></tr>
 <tr>
 <th scope="row">Métricas de Clientes **</th>
 <td>15.0%</td><td>90% - 120%</td><td></td><td></td><td></td>
-<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td></td><td></td><td>0.0%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">Clientes Lazos</th>
 <td>5.0%</td><td>90% - 120%</td><td>12,438</td><td></td><td>421</td>
-<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td></td><td></td><td>0.0%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">Churn Rate Lazos</th>
 <td>5.0%</td><td>90% - 120%</td><td>1.01%</td><td></td><td>0.0%</td>
-<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td></td><td></td><td>0.0%</td>
 </tr>
 <tr class="sangria">
 <th scope="row">NPS</th>
 <td>5.0%</td><td>90% - 120%</td><td>60</td><td></td><td>81</td>
-<td class="neg">0.0%</td><td></td><td></td><td>0.0%</td>
+<td class="logro-rojo">0.0%</td><td></td><td></td><td>0.0%</td>
 </tr>
 
 <tr class="total">
@@ -1435,14 +1463,14 @@ Cifras en millones de pesos; los totales pueden no coincidir por efectos de redo
 <tr><th scope="row">Costo de Originación canales Físicos</th><td>31.90%</td><td>18.37%</td><td>18.37%</td><td>22.11%</td><td>83.06%</td><td>0.00%</td><td>0.00%</td></tr>
 <tr><th scope="row">Tasa de Colocación Tradicional</th><td>34.04%</td><td>2.82%</td><td>2.82%</td><td>2.78%</td><td>98.56%</td><td>75.00%</td><td>25.53%</td></tr>
 <tr><th scope="row">Productividad Canales Físicos</th><td>34.06%</td><td>0.34</td><td>0.34</td><td>0.52</td><td>155.52%</td><td>155.52%</td><td>52.96%</td></tr>
-<tr><th scope="row" style="text-align:right;font-weight:800">Logro multiplicador Canales s DxN</th><td colspan="6" style="text-align:right"><span class="chip-logro">78.50%</span></td></tr>
+<tr class="fila-total-mult"><th scope="row" colspan="7">Logro multiplicador Canales s DxN</th><td><span class="chip-logro">78.50%</span></td></tr>
 
 <tr class="sep-fila"><td colspan="8"></td></tr>
 
 <tr><th scope="row">Costo de Originación CSB Directo y TMK</th><td>24.59%</td><td>13.38%</td><td>13.38%</td><td>15.16%</td><td>88.24%</td><td>0.00%</td><td>0.00%</td></tr>
 <tr><th scope="row">Tasa de Colocación CSB Directo y TMK</th><td>43.24%</td><td>2.52%</td><td>2.52%</td><td>2.36%</td><td>93.86%</td><td>0.00%</td><td>0.00%</td></tr>
 <tr><th scope="row">Productividad CSB Directo y TMK</th><td>32.17%</td><td>2.06</td><td>2.05</td><td>1.56</td><td>76.20%</td><td>76.20%</td><td>24.52%</td></tr>
-<tr><th scope="row" style="text-align:right;font-weight:800">Logro multiplicador CSB Directo &amp; TMK DxN</th><td colspan="6" style="text-align:right"><span class="chip-logro">24.52%</span></td></tr>
+<tr class="fila-total-mult"><th scope="row" colspan="7">Logro multiplicador CSB Directo &amp; TMK DxN</th><td><span class="chip-logro">24.52%</span></td></tr>
 
 <tr class="sep-fila"><td colspan="8"></td></tr>
 
@@ -1471,7 +1499,7 @@ Cifras en millones de pesos; los totales pueden no coincidir por efectos de redo
 <tbody>
 <tr><th scope="row">% Reservas DxN</th><td>12.44%</td><td>4.43%</td><td>4.32%</td><td>4.40%</td><td>98.37%</td><td>75.00%</td><td>9.33%</td></tr>
 <tr><th scope="row">Tasa de rendimiento (Ingresos Totales)</th><td>87.56%</td><td>2.34%</td><td>2.48%</td><td>2.55%</td><td>102.67%</td><td>102.67%</td><td>89.90%</td></tr>
-<tr><th scope="row" style="text-align:right;font-weight:800">Logro multiplicador cartera DxN</th><td colspan="6" style="text-align:right"><span class="chip-logro">99.23%</span></td></tr>
+<tr class="fila-total-mult"><th scope="row" colspan="7">Logro multiplicador cartera DxN</th><td><span class="chip-logro">99.23%</span></td></tr>
 </tbody>
 </table>
 </div>
@@ -1865,53 +1893,55 @@ VISTA 5 · NOTICIAS IMPORTANTES
 <div class="contenedor">
 
 <div class="cabecera-seccion rv">
-<span class="eyebrow">Comunicación</span>
-<h2 class="titulo-seccion" id="t-noticias">Noticias importantes</h2>
+<h2 class="titulo-seccion" id="t-noticias">Noticias</h2>
 <p class="subtitulo-seccion">
-Avisos y comunicados relevantes de la Dirección de Estrategia.
+Noticias relevantes del sector bancario.
 </p>
 </div>
 
 <!-- ============================================================
 CÓMO AGREGAR UNA NOTICIA
 ------------------------------------------------------------
-1. Copie el bloque <article class="noticia"> … </article> de abajo.
-2. Péguelo dentro de <div class="noticias"> … </div>.
-3. Cambie fecha, etiqueta, título y texto.
-4. Para destacar una noticia, agregue la clase "noticia--destacada":
-<article class="noticia noticia--destacada rv">
-5. Al agregar la primera noticia, borre el bloque .aviso-vacio
-que está más abajo y quite el atributo hidden de <div class="noticias">.
+Copie el bloque <a class="noticia"> … </a> y péguelo dentro de
+<div class="noticias">. Cambie la liga, la etiqueta, la fuente,
+el título y el texto. Para destacar una noticia agregue la clase
+"noticia--destacada".
+============================================================ -->
 
-PLANTILLA:
-<article class="noticia rv">
+<div class="noticias">
+
+<a class="noticia noticia--destacada rv" href="https://www.milenio.com/negocios/ley-economia-digital-mexico-avanza-regulacion-pagos" target="_blank" rel="noopener noreferrer">
 <div class="noticia__cinta"></div>
 <div class="noticia__cuerpo">
 <div class="noticia__meta">
-<span class="noticia__fecha">14 de octubre de 2026</span>
-<span class="noticia__tag">Categoría</span>
+<span class="noticia__tag">Regulación</span>
+<span class="noticia__fecha">Milenio</span>
 </div>
-<h3>Título de la noticia</h3>
-<p>Texto de la noticia.</p>
+<h3>Ley de Economía Digital</h3>
+<p>México avanza en la regulación de pagos digitales.</p>
+<span class="noticia__fuente">
+Leer la nota
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4 10.5 13.5"/><path d="M19 14.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 19V6a1.5 1.5 0 0 1 1.5-1.5H9"/></svg>
+</span>
 </div>
-</article>
-============================================================ -->
+</a>
 
-<div class="noticias" hidden>
-<!-- Las noticias se agregan aquí -->
+<a class="noticia rv" href="https://www.banxico.org.mx/publicaciones-y-prensa/minutas-de-las-decisiones-de-politica-monetaria/%7BF63C3DE2-0AEC-9BAE-A86E-FC59895F9702%7D.pdf" target="_blank" rel="noopener noreferrer">
+<div class="noticia__cinta"></div>
+<div class="noticia__cuerpo">
+<div class="noticia__meta">
+<span class="noticia__tag">Política monetaria</span>
+<span class="noticia__fecha">Banco de México</span>
 </div>
+<h3>Banxico · Decisión de política monetaria</h3>
+<p>Minuta de la decisión de política monetaria publicada por Banxico.</p>
+<span class="noticia__fuente">
+Abrir documento (PDF)
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4 10.5 13.5"/><path d="M19 14.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 19V6a1.5 1.5 0 0 1 1.5-1.5H9"/></svg>
+</span>
+</div>
+</a>
 
-<div class="aviso-vacio rv">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h9A1.5 1.5 0 0 1 16 5.5V18a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5.5Z"/>
-<path d="M16 9h2.5A1.5 1.5 0 0 1 20 10.5V18a2 2 0 0 1-2 2"/>
-<path d="M7.5 8h5M7.5 11.5h5M7.5 15h3"/>
-</svg>
-<h3>Sección lista para publicar</h3>
-<p>
-Aún no se ha publicado ninguna noticia. El código incluye una plantilla comentada
-con las instrucciones para agregar comunicados en cuanto estén disponibles.
-</p>
 </div>
 
 </div>
@@ -2027,7 +2057,7 @@ document.getElementById('anio').textContent = new Date().getFullYear();
 /* ============================================================
 NAVEGACIÓN ENTRE VISTAS
 ============================================================ */
-var VISTAS = ['historia','inicio','indicadores','proyectos','noticias'];
+var VISTAS = ['inicio','historia','indicadores','proyectos','noticias'];
 var nav = document.getElementById('nav');
 var burger = document.getElementById('burger');
 var menu = document.getElementById('menuMovil');
